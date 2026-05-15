@@ -1,0 +1,242 @@
+import { useState } from 'react'
+import Layout from '../components/Layout'
+import PixelButton from '../components/PixelButton'
+
+// ─── Default form state ───────────────────────────────────────
+
+const defaultForm = {
+  full_name: '',
+  age: '',
+  phone_number: '',
+  email: '',
+  gender: '',
+  preferred_study_destination: 'UK',
+  other_countries_interested: '',
+  program_interested: 'Undergraduate',
+  intake_period: '2026 intake',
+  highest_qualification: "Bachelor's degree",
+  other_qualification: '',
+  previous_visa_refusal: 'No',
+  referral_source: 'A friend',
+}
+
+// ─── Page ────────────────────────────────────────────────────
+
+export default function Applicants() {
+  const [form, setForm] = useState(defaultForm)
+  const [submitted, setSubmitted] = useState(false)
+
+  function handleChange(e) {
+    setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault()
+    // Wire to your backend endpoint here
+    setSubmitted(true)
+  }
+
+  return (
+    <Layout>
+      <main>
+        <article className="shell py-16 md:py-24">
+          <div className="max-w-3xl mx-auto lg:px-16 lg:py-16">
+
+            {/* Headings */}
+            <h1 className="font-inter font-bold text-[28px] lg:text-[48px] leading-[32px] lg:uppercase mb-6 lg:mb-8 text-brand-800 tracking-[0%] lg:tracking-[2px] text-center">
+              Application Segment
+            </h1>
+            <h2 className="font-inter font-semibold text-[24px] leading-[32px] mb-6 text-[#181E22] tracking-[3px] text-center">
+              Start your study abroad journey here
+            </h2>
+
+            {/* ── Success state ── */}
+            {submitted ? (
+              <div className="mt-12 flex flex-col items-center justify-center py-20 text-center">
+                <div className="flex items-center justify-center w-20 h-20 rounded-full bg-[#16484b]/10 mb-6">
+                  <i className="fa-solid fa-check text-3xl text-[#16484b]" />
+                </div>
+                <h3 className="font-display text-2xl font-bold text-slate-900">Application Submitted!</h3>
+                <p className="mt-3 text-slate-500 max-w-sm">
+                  Thank you for applying. Our team will review your application and get in touch within 24–48 hours.
+                </p>
+              </div>
+            ) : (
+
+              /* ── Form ── */
+              <form
+                onSubmit={handleSubmit}
+                className="mt-8 grid gap-4 sm:gap-6 sm:grid-cols-2 px-4 sm:px-6 lg:px-8"
+              >
+                {/* Full name */}
+                <div className="sm:col-span-2">
+                  <label className="mb-2 block text-sm font-semibold text-slate-800">Full Name*</label>
+                  <input
+                    name="full_name"
+                    type="text"
+                    value={form.full_name}
+                    onChange={handleChange}
+                    className="form-field"
+                    placeholder="Your full name"
+                    required
+                  />
+                </div>
+
+                {/* Age */}
+                <div>
+                  <label className="mb-2 block text-sm font-semibold text-slate-800">Age*</label>
+                  <input
+                    name="age"
+                    type="number"
+                    value={form.age}
+                    onChange={handleChange}
+                    className="form-field"
+                    placeholder="19"
+                    required
+                  />
+                </div>
+
+                {/* Phone */}
+                <div>
+                  <label className="mb-2 block text-sm font-semibold text-slate-800">Phone Number*</label>
+                  <input
+                    name="phone_number"
+                    type="tel"
+                    value={form.phone_number}
+                    onChange={handleChange}
+                    className="form-field"
+                    placeholder="+234 800 000 0000"
+                    required
+                  />
+                </div>
+
+                {/* Email */}
+                <div>
+                  <label className="mb-2 block text-sm font-semibold text-slate-800">Email*</label>
+                  <input
+                    name="email"
+                    type="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    className="form-field"
+                    placeholder="Email"
+                    required
+                  />
+                </div>
+
+                {/* Gender */}
+                <div>
+                  <label className="mb-2 block text-sm font-semibold text-slate-800">Gender*</label>
+                  <select name="gender" value={form.gender} onChange={handleChange} className="form-field" required>
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+
+                {/* Preferred destination */}
+                <div>
+                  <label className="mb-2 block text-sm font-semibold text-slate-800">Preferred study destination*</label>
+                  <select name="preferred_study_destination" value={form.preferred_study_destination} onChange={handleChange} className="form-field" required>
+                    {['UK', 'Canada', 'Ireland', 'Australia', 'USA'].map(d => (
+                      <option key={d}>{d}</option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Other countries */}
+                <div>
+                  <label className="mb-2 block text-sm font-semibold text-slate-800">Other countr(ies) interested in*</label>
+                  <input
+                    name="other_countries_interested"
+                    type="text"
+                    value={form.other_countries_interested}
+                    onChange={handleChange}
+                    className="form-field"
+                    placeholder="Optional"
+                  />
+                </div>
+
+                {/* Program */}
+                <div>
+                  <label className="mb-2 block text-sm font-semibold text-slate-800">Program interested in?*</label>
+                  <select name="program_interested" value={form.program_interested} onChange={handleChange} className="form-field" required>
+                    {['A Levels', 'Foundation', 'Undergraduate', 'Postgraduate'].map(p => (
+                      <option key={p}>{p}</option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Intake period */}
+                <div>
+                  <label className="mb-2 block text-sm font-semibold text-slate-800">Other programme interested in?*</label>
+                  <select name="intake_period" value={form.intake_period} onChange={handleChange} className="form-field" required>
+                    {['2026 intake', '2027 intake', 'Not sure yet'].map(i => (
+                      <option key={i}>{i}</option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Highest qualification */}
+                <div>
+                  <label className="mb-2 block text-sm font-semibold text-slate-800">Highest qualification?*</label>
+                  <select name="highest_qualification" value={form.highest_qualification} onChange={handleChange} className="form-field" required>
+                    {['SSCE', 'OND', 'HND', "Bachelor's degree"].map(q => (
+                      <option key={q}>{q}</option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Other qualification */}
+                <div>
+                  <label className="mb-2 block text-sm font-semibold text-slate-800">Other qualification*</label>
+                  <input
+                    name="other_qualification"
+                    type="text"
+                    value={form.other_qualification}
+                    onChange={handleChange}
+                    className="form-field"
+                    placeholder="Optional"
+                  />
+                </div>
+
+                {/* Visa refusal */}
+                <div>
+                  <label className="mb-2 block text-sm font-semibold text-slate-800">Any previous visa refusal?*</label>
+                  <select name="previous_visa_refusal" value={form.previous_visa_refusal} onChange={handleChange} className="form-field" required>
+                    <option>No</option>
+                    <option>Yes</option>
+                  </select>
+                </div>
+
+                {/* Referral source */}
+                <div>
+                  <label className="mb-2 block text-sm font-semibold text-slate-800">How did you hear about us?*</label>
+                  <select name="referral_source" value={form.referral_source} onChange={handleChange} className="form-field" required>
+                    {['A friend', 'Instagram', 'Referral partner', 'Google search'].map(s => (
+                      <option key={s}>{s}</option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Submit */}
+                <div className="sm:col-span-2 pt-3 mx-auto">
+                  <PixelButton
+                    as="button"
+                    type="submit"
+                    variant="secondary-applicants"
+                    label="Submit Application"
+                    className="px-3 rounded-[5px] pxbtn--arrow-lg"
+                  />
+                </div>
+
+              </form>
+            )}
+
+          </div>
+        </article>
+      </main>
+    </Layout>
+  )
+}
