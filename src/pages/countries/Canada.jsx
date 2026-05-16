@@ -2,9 +2,16 @@ import CountryPage from '../../components/CountryPage'
 import { countryHeroImages } from '../../data/countryHeroImages'
 
 const schools = [
-  'University of Canada West', 'Farleigh Dickinson University', 'University of Niagara Falls',
-  'Sheridan College', 'University of Manitoba (ICM)', 'Simon Fraser University (FIC)',
-  'Niagara College', 'Brock University', 'Sheridan College', 'Southern Ontario Collegiate'
+  'University of Canada West',
+  'Farleigh Dickinson University',
+  'Brock University',
+  'University of Niagara Falls',
+  'Sheridan College',
+  'Great Lakes College',
+  'University of Manitoba (ICM)',
+  'Simon Fraser University (FIC)',
+  'Southern Ontario Collegiate',
+  'Niagara College',
 ]
 
 export default function Canada() {

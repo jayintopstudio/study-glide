@@ -1,4 +1,5 @@
 import Layout from '../components/Layout'
+import OptimizedImage from '../components/OptimizedImage'
 import PixelButton from '../components/PixelButton'
 
 // ─── Data ────────────────────────────────────────────────────
@@ -123,7 +124,7 @@ export default function Services() {
 
                   {/* Image side */}
                   <div className="relative w-full lg:w-1/2 order-1 lg:order-none">
-                    <img
+                    <OptimizedImage
                       src={service.img}
                       alt={service.title}
                       className="w-full h-auto object-cover"

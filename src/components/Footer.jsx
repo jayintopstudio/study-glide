@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import OptimizedImage from './OptimizedImage'
 import PixelButton from './PixelButton'
 
 const FOOTER_LOGO = '/footer-logo.png'
@@ -42,7 +43,7 @@ export default function Footer() {
           {/* Column 1 — Brand */}
           <div>
             <Link to="/" className="flex items-center gap-3">
-              <img src={FOOTER_LOGO} alt="StudyGlide logo" className="w-full max-w-[160px]" />
+              <OptimizedImage src={FOOTER_LOGO} alt="StudyGlide logo" className="w-full max-w-[160px]" />
             </Link>
             <p className="mt-6 max-w-sm contact-text text-[#94A3B8]!">
               Nigeria&apos;s most trusted education consultancy, bridging the gap between local talent and global opportunities.

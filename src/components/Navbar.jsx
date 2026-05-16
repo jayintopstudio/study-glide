@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { NavLink, Link } from 'react-router-dom'
+import OptimizedImage from './OptimizedImage'
 import PixelButton from './PixelButton'
 
 const LOGO = '/logo.png'
@@ -53,7 +54,7 @@ export default function Navbar() {
 
           {/* ── Desktop logo ── */}
           <Link to="/" className="hidden lg:flex shrink-0 items-center">
-            <img src={LOGO} alt="StudyGlide logo" className="h-10 w-auto md:h-11" />
+            <OptimizedImage src={LOGO} alt="StudyGlide logo" priority className="h-10 w-auto md:h-11" />
           </Link>
 
           {/* ── Desktop nav links ── */}
@@ -86,7 +87,7 @@ export default function Navbar() {
 
             {/* Mobile logo (centred) */}
             <Link to="/" className="flex shrink-0 items-center lg:hidden">
-              <img src={LOGO} alt="StudyGlide logo" className="h-10 w-auto" />
+              <OptimizedImage src={LOGO} alt="StudyGlide logo" className="h-10 w-auto" />
             </Link>
 
             {/* Hamburger button (mobile only) */}
@@ -122,7 +123,7 @@ export default function Navbar() {
         >
           <div className="flex shrink-0 items-center justify-between px-5 pt-[max(1rem,env(safe-area-inset-top))] pb-4">
             <Link to="/" className="shrink-0" onClick={() => setMobileOpen(false)}>
-              <img src={LOGO} alt="StudyGlide logo" className="h-10 w-auto" />
+              <OptimizedImage src={LOGO} alt="StudyGlide logo" className="h-10 w-auto" />
             </Link>
             <button
               type="button"

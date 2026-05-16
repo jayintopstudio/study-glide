@@ -2,6 +2,7 @@ import { useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import Layout from '../components/Layout'
 import PixelButton from '../components/PixelButton'
+import OptimizedImage from '../components/OptimizedImage'
 import { countryHeroImages } from '../data/countryHeroImages'
 
 // ─── Data ────────────────────────────────────────────────────
@@ -20,26 +21,38 @@ const universities = [
 ]
 
 const services = [
-  { n: 1, title: 'University and Course Selection Guidance',              body: 'Personalised recommendations tailored to your academic background, career aspirations, and budget.' },
-  { n: 2, title: 'Admission Processing and Application Support',          body: 'End-to-end assistance with submitting strong, complete applications to your chosen universities.' },
-  { n: 3, title: 'Personal Statement and Document Preparation',           body: 'Expert help crafting compelling personal statements, CVs, and all required supporting documents.' },
-  { n: 4, title: 'Visa Application Assistance',                           body: 'Professional guidance through the entire visa process to maximise your chances of approval.' },
-  { n: 5, title: 'Accommodation Advice',                                  body: 'Practical support in finding safe, comfortable, and suitable student housing options.' },
-  { n: 6, title: 'Scholarship and Funding Guidance',                      body: 'Assistance identifying and applying for scholarships, discounts, and funding opportunities.' },
-  { n: 7, title: 'Interview Preparation and Credibility Interview Coaching', body: 'One-on-one coaching to prepare you confidently for university and visa interviews.' },
-  { n: 8, title: 'Pre-Departure and Travel Guidance',                     body: 'Comprehensive briefings to help you prepare for life abroad, travel, and successful settlement.' },
+  { n: '01', title: 'University & Course Selection', body: 'Personalised recommendations tailored to your academic background, career aspirations, and budget.' },
+  { n: '02', title: 'Admission Processing & Application Support', body: 'End-to-end assistance with submitting strong, complete applications to your chosen universities.' },
+  { n: '03', title: 'Personal Statement & Document Preparation', body: 'Expert help crafting compelling personal statements, CVs, and all required supporting documents.' },
+  { n: '04', title: 'Visa Application Assistance', body: 'Professional guidance through the entire visa process to maximise your chances of approval.' },
+  { n: '05', title: 'Accommodation Advice', body: 'Practical support in finding safe, comfortable, and suitable student housing options.' },
+  { n: '06', title: 'Scholarship & Funding Guidance', body: 'Assistance identifying and applying for scholarships, discounts, and funding opportunities.' },
+  { n: '07', title: 'Interview Preparation & Credibility Coaching', body: 'One-on-one coaching to prepare you confidently for university and visa interviews.' },
+  { n: '08', title: 'Pre-Departure & Travel Guidance', body: 'Comprehensive briefings to help you prepare for life abroad, travel, and successful settlement.' },
 ]
 
+/** 12-column mosaic spans (desktop grid only) */
+const DEST_GRID_SPANS = ['span-6', 'span-3', 'span-3', 'span-3', 'span-3', 'span-6', 'span-6', 'span-6']
+
 const destinations = [
-  { img: countryHeroImages.uk, name: 'United Kingdom', desc: 'World-renowned universities, shorter course durations, and excellent post-study work opportunities.',           to: '/destination/uk' },
-  { img: countryHeroImages.canada, name: 'Canada',         desc: 'High-quality education, welcoming environment, and strong post-graduation work permits.',            to: '/destination/canada' },
-  { img: countryHeroImages.ireland, name: 'Ireland',        desc: 'Innovative programmes and a supportive European study destination.',               to: '/destination/ireland' },
-  { img: countryHeroImages.australia, name: 'Australia',      desc: 'Outstanding education system with generous post-study work visas.',                       to: '/destination/australia' },
-  { img: countryHeroImages.usa, name: 'United States',  desc: 'Unparalleled academic flexibility and vast career opportunities.  vast career opportunities.',                    to: '/destination/usa' },
-  { img: countryHeroImages.dubai, name: 'Dubai',          desc: 'Modern, dynamic education hub with strong industry connections. Modern, dynamic education  ',                 to: '/destination/dubai' },
-  { img: countryHeroImages.newZealand, name: 'New Zealand',    desc: 'Safe, high-quality education in a naturally beautiful setting.naturally beautiful setting.',               to: '/destination/new-zealand' },
-  { img: countryHeroImages.europe, name: 'Europe',         desc: 'Affordable tuition, diverse programmes, and rich cultural experiences.',                 to: '/destination/europe' },
+  { tag: 'UK', img: countryHeroImages.uk, name: 'United Kingdom', desc: 'World-renowned universities, shorter course durations, and excellent post-study work opportunities.',           to: '/destination/uk' },
+  { tag: 'CA', img: countryHeroImages.canada, name: 'Canada',         desc: 'High-quality education, welcoming environment, and strong post-graduation work permits.',            to: '/destination/canada' },
+  { tag: 'IE', img: countryHeroImages.ireland, name: 'Ireland',        desc: 'Innovative programmes and a supportive European study destination.',               to: '/destination/ireland' },
+  { tag: 'AU', img: countryHeroImages.australia, name: 'Australia',      desc: 'Outstanding education system with generous post-study work visas.',                       to: '/destination/australia' },
+  { tag: 'US', img: countryHeroImages.usa, name: 'United States',  desc: 'Unparalleled academic flexibility and vast career opportunities.',                    to: '/destination/usa' },
+  { tag: 'AE', img: countryHeroImages.dubai, name: 'Dubai',          desc: 'Modern, dynamic education hub with strong industry connections.',                 to: '/destination/dubai' },
+  { tag: 'NZ', img: countryHeroImages.newZealand, name: 'New Zealand',    desc: 'Safe, high-quality education in a naturally beautiful setting.',               to: '/destination/new-zealand' },
+  { tag: 'EU', img: countryHeroImages.europe, name: 'Europe',         desc: 'Affordable tuition, diverse programmes, and rich cultural experiences.',                 to: '/destination/europe' },
 ]
+
+function DestCardArrow() {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <line x1="7" y1="17" x2="17" y2="7" />
+      <polyline points="7 7 17 7 17 17" />
+    </svg>
+  )
+}
 
 const testimonials = [
   { videoUrl: 'https://res.cloudinary.com/dhthtqqff/video/upload/v1777943915/first_sr4n63.mp4',  name: 'Toyosi',  school: 'University of Northumbria', country: 'UK' },
@@ -261,9 +274,10 @@ export default function Home() {
 
             {/* Hero image */}
             <div className="relative overflow-hidden shadow-card">
-              <img
+              <OptimizedImage
                 src="/home-page-hero.png"
                 alt="Smiling international student in a hallway"
+                priority
                 className="h-80 sm:h-[450px] md:h-[500px] lg:h-[540px] w-full object-cover object-center"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-brand-900 via-brand-900/10 to-transparent" />
@@ -285,7 +299,7 @@ export default function Home() {
           </div>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-6 sm:hidden">
             {universities.map(u => (
-              <img key={u.alt} src={u.src} alt={u.alt} className="logo-image max-h-12 w-auto object-contain" />
+              <OptimizedImage key={u.alt} src={u.src} alt={u.alt} className="logo-image max-h-12 w-auto object-contain" />
             ))}
           </div>
           <div className="logo-marquee mt-8 hidden sm:block">
@@ -293,13 +307,13 @@ export default function Home() {
               {/* Group 1 */}
               <div className="logo-marquee-group">
                 {universities.map(u => (
-                  <img key={u.alt} src={u.src} alt={u.alt} className="logo-image" />
+                  <OptimizedImage key={u.alt} src={u.src} alt={u.alt} className="logo-image" />
                 ))}
               </div>
               {/* Group 2 — duplicate for seamless loop */}
               <div className="logo-marquee-group" aria-hidden="true">
                 {universities.map(u => (
-                  <img key={u.alt + '-dup'} src={u.src} alt="" className="logo-image" />
+                  <OptimizedImage key={u.alt + '-dup'} src={u.src} decorative className="logo-image" />
                 ))}
               </div>
             </div>
@@ -307,26 +321,30 @@ export default function Home() {
         </section>
 
         {/* ── Services ── */}
-        <section className="py-12 sm:py-16 md:py-20">
+        <section className="svc-section py-12 sm:py-16 md:py-20">
           <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between py-6">
             <div>
               <p className="eyebrow font-semibold! leading-6!">Our Expertise</p>
               <h2 className="section-title mt-4">Comprehensive Services</h2>
             </div>
             <PixelButton
-              variant="ghost"
+              variant="gold"
               label="View All Services"
               to="/services"
               className="min-w-[180px]"
             />
           </div>
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-            {services.map(s => (
-              <article key={s.n} className="service-card border-transparent">
-                <span className="icon-chip">0{s.n}</span>
-                <h3 className="mt-5 font-display text-lg text-[#181D27] font-bold">{s.title}</h3>
-                <p className="mt-3 text-sm leading-7 text-[#535862]">{s.body}</p>
-              </article>
+          <div className="svc-grid">
+            {services.map((s) => (
+              <Link key={s.n} to="/services" className="svc-card">
+                <div className="svc-num">{s.n}</div>
+                <h3 className="svc-title">{s.title}</h3>
+                <p className="svc-desc">{s.body}</p>
+                <span className="svc-arrow">
+                  Learn more
+                  <i className="fa-solid fa-arrow-right text-[0.75rem]" aria-hidden />
+                </span>
+              </Link>
             ))}
           </div>
         </section>
@@ -346,14 +364,22 @@ export default function Home() {
             />
           </div>
 
-          {/* Desktop: 4×2 grid */}
-          <div className="hidden lg:grid lg:grid-cols-4 lg:gap-5">
-            {destinations.map(d => (
-              <Link key={d.name} to={d.to} className="group destination-card">
-                <img src={d.img} alt={d.name} className="destination-card-image object-[52%_center]" />
-                <div className="destination-card-content">
-                  <h3 className="font-inter text-[1.5rem] font-semiboldleading-tight">{d.name}</h3>
-                  <p className="text-sm leading-6 text-white/80">{d.desc}</p>
+          {/* Desktop: mosaic grid */}
+          <div className="dest-grid hidden lg:grid">
+            {destinations.map((d, i) => (
+              <Link
+                key={d.name}
+                to={d.to}
+                className={`dest-card ${DEST_GRID_SPANS[i]}`}
+              >
+                <OptimizedImage src={d.img} alt="" decorative className="dest-card__media" />
+                <span className="dest-card__tag">{d.tag}</span>
+                <span className="dest-card__arrow">
+                  <DestCardArrow />
+                </span>
+                <div className="dest-card__meta">
+                  <h3>{d.name}</h3>
+                  <p>{d.desc}</p>
                 </div>
               </Link>
             ))}
@@ -373,7 +399,7 @@ export default function Home() {
                   data-dest-slide
                   className="group destination-card w-[min(100%,20rem)] shrink-0 snap-center"
                 >
-                  <img src={d.img} alt={d.name} className="destination-card-image object-[52%_center]" />
+                  <OptimizedImage src={d.img} alt={d.name} className="destination-card-image object-[52%_center]" />
                   <div className="destination-card-content">
                     <h3 className="font-display text-[2rem] leading-tight">{d.name}</h3>
                     <p className="text-sm leading-6 text-white/80">{d.desc}</p>
@@ -455,7 +481,7 @@ export default function Home() {
           <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-start">
             {/* Left — image */}
             <div className="relative overflow-hidden w-full h-64 sm:h-80 md:h-96 lg:min-h-[786px] my-16">
-              <img
+              <OptimizedImage
                 src="/Image(12).png"
                 alt="Prospective student holding books"
                 className="absolute inset-0 w-full h-full object-cover object-center"

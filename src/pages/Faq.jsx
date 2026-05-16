@@ -1,5 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import Layout from '../components/Layout'
+import OptimizedImage from '../components/OptimizedImage'
 import PixelButton from '../components/PixelButton'
 
 // ─── Data ────────────────────────────────────────────────────
@@ -93,21 +95,35 @@ const teamAvatars = [
   { src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80', alt: 'Team member 3', cls: 'h-12 w-12' },
 ]
 
-// ─── Accordion item ──────────────────────────────────────────
+function faqMatchesQuery(faq, q) {
+  if (faq.q.toLowerCase().includes(q)) return true
+  if (typeof faq.a === 'string') return faq.a.toLowerCase().includes(q)
+  const parts = [faq.a.intro, faq.a.outro, ...(faq.a.bullets || [])].filter(Boolean)
+  return parts.some((part) => part.toLowerCase().includes(q))
+}
 
-/** `answer` is either a plain string or { intro?, bullets?, outro? } like the FAQ layout samples. */
+function FaqPlusIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden>
+      <line x1="12" y1="5" x2="12" y2="19" />
+      <line x1="5" y1="12" x2="19" y2="12" />
+    </svg>
+  )
+}
+
+/** `answer` is either a plain string or { intro?, bullets?, outro? }. */
 function FaqAnswerBody({ answer }) {
   if (typeof answer === 'string') {
-    return <p className="faq-paragraph pb-4">{answer}</p>
+    return <p className="faq-paragraph mt-0!">{answer}</p>
   }
 
   const { intro, bullets = [], outro } = answer
 
   return (
-    <div className="space-y-3 pb-4 pt-0.5">
+    <div className="space-y-3">
       {intro ? <p className="faq-paragraph mt-0!">{intro}</p> : null}
       {bullets.length > 0 ? (
-        <ul className="ml-5 list-disc space-y-2 pl-1 text-[0.9375rem] leading-[1.75] text-[#535862]">
+        <ul className="ml-5 list-disc space-y-2 pl-1 text-[0.875rem] leading-[1.65] text-[#535862]">
           {bullets.map((line, j) => (
             <li key={j}>{line}</li>
           ))}
@@ -118,55 +134,21 @@ function FaqAnswerBody({ answer }) {
   )
 }
 
-function AccordionItem({ question, answer, isOpen, onToggle }) {
-  return (
-    <div className="accordion-item py-4">
-      <button
-        onClick={onToggle}
-        className="flex w-full items-center justify-between text-left focus:outline-none group"
-        aria-expanded={isOpen}
-      >
-        <h3 className="faq-title pr-4">{question}</h3>
-        <div className="relative w-5 h-5 shrink-0 text-gray-400">
-          {/* Minus — shown when open */}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className={`absolute inset-0 transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0'}`}
-            fill="none" viewBox="0 0 24 24" stroke="currentColor"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          {/* Plus — shown when closed */}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className={`absolute inset-0 transition-opacity duration-300 ${isOpen ? 'opacity-0' : 'opacity-100'}`}
-            fill="none" viewBox="0 0 24 24" stroke="currentColor"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-        </div>
-      </button>
-
-      {/* Answer panel — tall max-height so structured answers are not clipped */}
-      <div
-        className={`overflow-hidden transition-all duration-300 ease-in-out ${
-          isOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'
-        }`}
-      >
-        <FaqAnswerBody answer={answer} />
-      </div>
-    </div>
-  )
-}
-
 // ─── Page ────────────────────────────────────────────────────
 
 export default function Faq() {
   const [openIndex, setOpenIndex] = useState(0)
+  const [query, setQuery] = useState('')
 
-  function toggle(i) {
-    setOpenIndex(prev => (prev === i ? null : i))
-  }
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase()
+    if (!q) return faqs
+    return faqs.filter((faq) => faqMatchesQuery(faq, q))
+  }, [query])
+
+  useEffect(() => {
+    setOpenIndex(0)
+  }, [query])
 
   return (
     <Layout>
@@ -178,12 +160,10 @@ export default function Faq() {
         <div className="shell pb-20 sm:pb-24 md:pb-28 pt-12 sm:pt-16 md:pt-25">
           <div className="grid grid-cols-1 items-center gap-3">
 
-            {/* Breadcrumb */}
             <div className="w-full">
               <div className="hero-breadcrumb capitalize! font-semibold!">Frequently Asked Questions</div>
             </div>
 
-            {/* Title + subtitle */}
             <div className="grid grid-cols-1 lg:grid-cols-12">
               <div className="order-1 col-span-7">
                 <h1 className="hero-title text-[32px]! md:text-[40px]! lg:text-[48px]! font-medium! tracking-[-2%] max-w-[632px] leading-[44px]! md:leading-[60px]!">What services does StudyGlide Educational Consult provide?</h1>
@@ -197,36 +177,60 @@ export default function Faq() {
           </div>
         </div>
 
-        {/* White corner clip */}
         <div className="absolute -bottom-px right-0 h-20 w-28 bg-white [clip-path:polygon(100%_0,0_100%,100%_100%)]" />
       </section>
 
-      {/* ── Main ── */}
-      <main className='bg-[#FAFAFA]'>
-        <div id="mission-statement" className="shell py-16">
-          <section className="max-w-3xl mx-auto p-6">
+      {/* ── Search + accordion ── */}
+      <main className="bg-[#FAFAFA]">
+        <div className="shell py-16 sm:py-20">
+          <div className="faq-search-wrap">
+            <span className="faq-search-icon" aria-hidden>
+              <i className="fa-solid fa-magnifying-glass" />
+            </span>
+            <input
+              type="search"
+              className="faq-search"
+              placeholder="Search questions… (e.g. visa, scholarship, IELTS)"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              aria-label="Search frequently asked questions"
+            />
+          </div>
 
-            {/* Accordion list */}
-            <div className="divide-y divide-gray-100">
-              {faqs.map((faq, i) => (
-                <AccordionItem
-                  key={i}
-                  question={faq.q}
-                  answer={faq.a}
-                  isOpen={openIndex === i}
-                  onToggle={() => toggle(i)}
-                />
-              ))}
-            </div>
-          </section>
+          <div className="faq-list">
+            {filtered.length === 0 ? (
+              <p className="faq-empty">
+                No questions match &ldquo;{query}&rdquo;.{' '}
+                <Link to="/contact">Ask us directly →</Link>
+              </p>
+            ) : (
+              filtered.map((faq, i) => (
+                <div key={faq.q} className={`faq-item ${openIndex === i ? 'open' : ''}`}>
+                  <button
+                    type="button"
+                    className="faq-q"
+                    onClick={() => setOpenIndex(openIndex === i ? -1 : i)}
+                    aria-expanded={openIndex === i}
+                  >
+                    {faq.q}
+                    <span className="faq-icon">
+                      <FaqPlusIcon />
+                    </span>
+                  </button>
+                  <div className="faq-a">
+                    <div className="faq-a-inner">
+                      <FaqAnswerBody answer={faq.a} />
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
 
-          {/* ── Still have questions CTA ── */}
-          <section id="faq-contacts" className="flex flex-col items-center justify-center rounded-2xl bg-white mb-24 mt-9 px-6 py-12 text-center">
-
-            {/* Avatar stack */}
-            <div className="flex -space-x-3 mb-6">
-              {teamAvatars.map(a => (
-                <img
+          <section id="faq-contacts" className="faq-cta-card mb-8">
+            <div className="flex -space-x-3 justify-center mb-6">
+              {teamAvatars.map((a) => (
+                <OptimizedImage
                   key={a.alt}
                   src={a.src}
                   alt={a.alt}
@@ -235,8 +239,8 @@ export default function Faq() {
               ))}
             </div>
 
-            <h2 className="text-xl font-semibold text-gray-900 mb-2">Still have questions?</h2>
-            <p className="text-gray-600 mb-8 max-w-md">
+            <h2 className="text-xl font-semibold text-[#181D27] mb-2">Still have questions?</h2>
+            <p className="text-[#535862] mb-8 max-w-md mx-auto">
               Can&apos;t find the answer you&apos;re looking for? Please chat to our friendly team.
             </p>
 
@@ -245,7 +249,6 @@ export default function Faq() {
               variant="secondary"
               label="Contact Support"
             />
-
           </section>
         </div>
       </main>

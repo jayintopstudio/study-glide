@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Layout from '../components/Layout'
+import OptimizedImage from '../components/OptimizedImage'
 import PixelButton from '../components/PixelButton'
 
 // ─── Data ────────────────────────────────────────────────────
@@ -171,7 +172,11 @@ export default function Contact() {
             </div>
 
             {/* ── Right — contact form ── */}
-            <img src={'Image(12).png'} alt="Contact" className="w-full h-full object-cover hidden lg:block" />
+            <OptimizedImage
+              src="/Image(12).png"
+              alt="StudyGlide consultant meeting with a student"
+              className="w-full h-full object-cover hidden lg:block"
+            />
 
           </div>
         </div>

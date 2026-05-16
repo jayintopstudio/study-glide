@@ -1,4 +1,5 @@
 import Layout from './Layout'
+import OptimizedImage from './OptimizedImage'
 import PixelButton from './PixelButton'
 
 /**
@@ -32,9 +33,10 @@ export default function CountryPage({ title, heroImage, description, schoolsLabe
       <main>
         {/* Hero image */}
         <div className="shell -mt-15 relative z-10">
-          <img
+          <OptimizedImage
             src={heroImage}
             alt={title}
+            priority
             className="w-full h-[400px] md:h-[600px] object-cover shadow-card"
           />
         </div>

@@ -1,13 +1,25 @@
 import Layout from '../components/Layout'
 import PixelButton from '../components/PixelButton'
+import OptimizedImage from '../components/OptimizedImage'
+import useCountUp from '../hooks/useCountUp'
 
 // ─── Data ────────────────────────────────────────────────────
 
 const stats = [
-  { value: '10+',  label: 'Years Experience' },
-  { value: '98%',  label: 'Visa Success Rate' },
-  { value: '100+', label: 'Students Placed' },
+  { value: 10, suffix: '+', label: 'Years Experience' },
+  { value: 98, suffix: '%', label: 'Visa Success Rate' },
+  { value: 100, suffix: '+', label: 'Students Placed' },
 ]
+
+function StatNumber({ value, suffix }) {
+  const [v, ref] = useCountUp(value)
+  return (
+    <span ref={ref}>
+      {v}
+      {suffix}
+    </span>
+  )
+}
 
 const universities = [
   { src: 'universities/National%20College%20of%20Ireland.png', alt: 'National College of Ireland' },
@@ -109,7 +121,9 @@ export default function About() {
             <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-6 lg:gap-12 py-10 px-6 md:p-14 bg-[#FAFAFA] rounded-[16px]">
               {stats.map(s => (
                 <div key={s.label} className="text-center">
-                  <h3 className="about-stats-number text-5xl! font-semibold! md:text-[60px]!">{s.value}</h3>
+                  <h3 className="about-stats-number text-5xl! font-semibold! md:text-[60px]!">
+                    <StatNumber value={s.value} suffix={s.suffix} />
+                  </h3>
                   <p className="about-stats-paragraph mt-3!">{s.label}</p>
                 </div>
               ))}
@@ -134,9 +148,9 @@ export default function About() {
               </div>
               {/* Image */}
               <div className="lg:h-[654px]">
-                <img
-                  src="about-us/Image(11).png"
-                  alt="About us"
+                <OptimizedImage
+                  src="/about-us/Image(11).png"
+                  alt="Students at a university library"
                   className="h-full w-full object-cover"
                 />
               </div>
@@ -152,7 +166,7 @@ export default function About() {
           </div>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-6 sm:hidden">
             {universities.map(u => (
-              <img key={u.alt} src={u.src} alt={u.alt} className="logo-image max-h-12 w-auto object-contain" />
+              <OptimizedImage key={u.alt} src={u.src} alt={u.alt} className="logo-image max-h-12 w-auto object-contain" />
             ))}
           </div>
           <div className="logo-marquee mt-8 hidden sm:block">
@@ -160,13 +174,13 @@ export default function About() {
               {/* Group 1 */}
               <div className="logo-marquee-group">
                 {universities.map(u => (
-                  <img key={u.alt} src={u.src} alt={u.alt} className="logo-image" />
+                  <OptimizedImage key={u.alt} src={u.src} alt={u.alt} className="logo-image" />
                 ))}
               </div>
               {/* Group 2 — duplicate for seamless loop */}
               <div className="logo-marquee-group" aria-hidden="true">
                 {universities.map(u => (
-                  <img key={u.alt + '-dup'} src={u.src} alt="" className="logo-image" />
+                  <OptimizedImage key={u.alt + '-dup'} src={u.src} decorative className="logo-image" />
                 ))}
               </div>
             </div>

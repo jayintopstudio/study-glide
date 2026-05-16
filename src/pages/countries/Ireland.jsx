@@ -2,9 +2,16 @@ import CountryPage from '../../components/CountryPage'
 import { countryHeroImages } from '../../data/countryHeroImages'
 
 const schools = [
-  'Dublin Business School', 'Griffith College', 'CCT Dublin',
-  'Munster Technological University', 'Technology University of Shannon',
-  'National College of Ireland', 'University of Limerick', 'Maynooth University',
+  'Dublin Business School',
+  'Griffith College',
+  'CCT Dublin',
+  'Munster Technological University',
+  'Technology University of Shannon',
+  'Technology University of Dublin',
+  'National College of Ireland',
+  'Dublin International Foundation College',
+  'University of Limerick',
+  'Maynooth University',
 ]
 
 export default function Ireland() {

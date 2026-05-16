@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import OptimizedImage from './OptimizedImage'
 
 const WHATSAPP_NUMBER = '+2349133071334'
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`
@@ -51,7 +52,7 @@ export default function WhatsappWidget() {
         <div className="bg-[#25D366] p-4 text-white">
           <div className="flex items-center gap-3">
             <div className="relative">
-              <img
+              <OptimizedImage
                 src="https://ui-avatars.com/api/?name=Support&background=white&color=25D366"
                 className="h-10 w-10 rounded-full"
                 alt="Support avatar"
