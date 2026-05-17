@@ -3,7 +3,11 @@ import { Link } from 'react-router-dom'
 import Layout from '../components/Layout'
 import PixelButton from '../components/PixelButton'
 import OptimizedImage from '../components/OptimizedImage'
+import TestimonialVideo from '../components/TestimonialVideo'
+import useTestimonials from '../hooks/useTestimonials'
 import { countryHeroImages } from '../data/countryHeroImages'
+import { getSubmitErrorMessage } from '../lib/formErrors'
+import { submitApplication } from '../services/applications'
 
 // ─── Data ────────────────────────────────────────────────────
 
@@ -54,12 +58,6 @@ function DestCardArrow() {
   )
 }
 
-const testimonials = [
-  { videoUrl: 'https://res.cloudinary.com/dhthtqqff/video/upload/v1777943915/first_sr4n63.mp4',  name: 'Toyosi',  school: 'University of Northumbria', country: 'UK' },
-  { videoUrl: 'https://res.cloudinary.com/dhthtqqff/video/upload/v1777944302/second_xaanaz.mp4', name: 'Deborah', school: 'University of Lancashire',   country: 'UK' },
-  { videoUrl: 'https://res.cloudinary.com/dhthtqqff/video/upload/v1777944497/third_qegdn3.mp4',  name: 'Ayomide', school: 'University of Sunderland',    country: 'Canada' },
-]
-
 // ─── Sub-components ──────────────────────────────────────────
 
 function VideoModal({ url, onClose }) {
@@ -73,12 +71,10 @@ function VideoModal({ url, onClose }) {
       >
         <i className="fa-solid fa-xmark" />
       </button>
-      <video
+      <TestimonialVideo
         src={url}
         className="w-full h-auto max-h-[80vh] md:max-w-4xl mx-auto rounded-3xl shadow-2xl object-contain"
         controls
-        autoPlay
-        playsInline
       />
     </div>
   )
@@ -97,15 +93,25 @@ const defaultForm = {
 function ApplyForm() {
   const [form, setForm] = useState(defaultForm)
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState(null)
 
   function handleChange(e) {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-    // Wire to your backend endpoint here
-    setSubmitted(true)
+    setSubmitting(true)
+    setError(null)
+    try {
+      await submitApplication(form, 'home')
+      setSubmitted(true)
+    } catch (err) {
+      setError(getSubmitErrorMessage(err))
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   if (submitted) {
@@ -192,13 +198,17 @@ function ApplyForm() {
           {['A friend','Instagram','Referral partner','Google search'].map(s => <option key={s}>{s}</option>)}
         </select>
       </div>
+      {error ? (
+        <p className="sm:col-span-2 text-sm text-red-600" role="alert">{error}</p>
+      ) : null}
       <div className="sm:col-span-2 pt-3 mx-auto">
         <PixelButton
           as="button"
           type="submit"
           variant="secondary"
-          label="Submit Application"
+          label={submitting ? 'Submitting…' : 'Submit Application'}
           className="min-w-[180px]"
+          disabled={submitting}
         />
       </div>
     </form>
@@ -211,6 +221,7 @@ export default function Home() {
   const [modalUrl, setModalUrl] = useState(null)
   const destScrollRef = useRef(null)
   const testimonialScrollRef = useRef(null)
+  const { testimonials, loading: testimonialsLoading, error: testimonialsError } = useTestimonials()
 
   function scrollDestCarousel(dir) {
     const el = destScrollRef.current
@@ -386,7 +397,7 @@ export default function Home() {
           </div>
 
           {/* Mobile / tablet: horizontal carousel */}
-          <div className="lg:hidden">
+          {/* <div className="lg:hidden">
             <div
               ref={destScrollRef}
               className="-mx-4 flex gap-4 overflow-x-auto scroll-smooth px-4 pb-2 snap-x snap-mandatory touch-pan-x [scrollbar-width:thin]"
@@ -415,7 +426,7 @@ export default function Home() {
                 <i className="fa-solid fa-arrow-right" />
               </button>
             </div>
-          </div>
+          </div> */}
         </section>
 
         {/* ── Testimonials ── */}
@@ -426,24 +437,30 @@ export default function Home() {
           <p className="mt-3 sm:text-xl tracking-[-2%] text-[#535862]">Hear from some of our amazing students we have helped.</p>
 
           <div className="mt-10">
+            {testimonialsLoading ? (
+              <p className="text-[#535862]">Loading success stories…</p>
+            ) : testimonialsError ? (
+              <p className="text-[#535862]">Unable to load testimonials right now.</p>
+            ) : testimonials.length === 0 ? (
+              <p className="text-[#535862]">Success stories coming soon.</p>
+            ) : (
+            <>
             <div
               ref={testimonialScrollRef}
               className="-mx-4 flex gap-6 overflow-x-auto scroll-smooth px-4 pb-2 snap-x snap-mandatory touch-pan-x [scrollbar-width:thin]"
               style={{ WebkitOverflowScrolling: 'touch' }}
             >
-            {testimonials.map((t, i) => (
+            {testimonials.map((t) => (
               <article
-                key={i}
+                key={t.id}
                 data-testimonial-slide
                 className="group relative h-[480px] w-[min(100%,22rem)] shrink-0 snap-center overflow-hidden bg-slate-900 cursor-pointer shadow-lg ring-1 ring-white/10 sm:w-[min(100%,26rem)]"
                 onClick={() => setModalUrl(t.videoUrl)}
               >
-                <video
+                <TestimonialVideo
                   src={t.videoUrl}
                   className="absolute inset-0 h-full w-full object-cover"
-                  muted
-                  playsInline
-                  loading="lazy"
+                  preview
                 />
                 {/* Soft veil — transparent toward top, readable at bottom */}
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" aria-hidden />
@@ -473,6 +490,8 @@ export default function Home() {
                 <i className="fa-solid fa-arrow-right" />
               </button>
             </div>
+            </>
+            )}
           </div>
         </section>
 

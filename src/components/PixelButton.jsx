@@ -114,6 +114,7 @@ export default function PixelButton({
   type = 'submit',
   as,
   onClick,
+  disabled = false,
   cols = DEFAULT_COLS,
   rows = DEFAULT_ROWS,
 }) {
@@ -153,7 +154,7 @@ export default function PixelButton({
 
   if (isButton) {
     return (
-      <button ref={btnRef} type={type} className={rootClass} onClick={onClick}>
+      <button ref={btnRef} type={type} className={rootClass} onClick={onClick} disabled={disabled}>
         {inner}
       </button>
     )

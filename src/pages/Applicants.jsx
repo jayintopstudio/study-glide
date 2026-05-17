@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import Layout from '../components/Layout'
 import PixelButton from '../components/PixelButton'
+import { getSubmitErrorMessage } from '../lib/formErrors'
+import { submitApplication } from '../services/applications'
 
 // ─── Default form state ───────────────────────────────────────
 
@@ -25,15 +27,25 @@ const defaultForm = {
 export default function Applicants() {
   const [form, setForm] = useState(defaultForm)
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState(null)
 
   function handleChange(e) {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-    // Wire to your backend endpoint here
-    setSubmitted(true)
+    setSubmitting(true)
+    setError(null)
+    try {
+      await submitApplication(form, 'applicants')
+      setSubmitted(true)
+    } catch (err) {
+      setError(getSubmitErrorMessage(err))
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -220,14 +232,19 @@ export default function Applicants() {
                   </select>
                 </div>
 
+                {error ? (
+                  <p className="sm:col-span-2 text-sm text-red-600" role="alert">{error}</p>
+                ) : null}
+
                 {/* Submit */}
                 <div className="sm:col-span-2 pt-3 mx-auto">
                   <PixelButton
                     as="button"
                     type="submit"
                     variant="secondary-applicants"
-                    label="Submit Application"
+                    label={submitting ? 'Submitting…' : 'Submit Application'}
                     className="px-3 rounded-[5px] pxbtn--arrow-lg"
+                    disabled={submitting}
                   />
                 </div>
 

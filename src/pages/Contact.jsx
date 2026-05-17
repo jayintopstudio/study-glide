@@ -2,6 +2,8 @@ import { useState } from 'react'
 import Layout from '../components/Layout'
 import OptimizedImage from '../components/OptimizedImage'
 import PixelButton from '../components/PixelButton'
+import { getSubmitErrorMessage } from '../lib/formErrors'
+import { submitContactMessage } from '../services/contact'
 
 // ─── Data ────────────────────────────────────────────────────
 
@@ -51,15 +53,25 @@ const defaultForm = {
 export default function Contact() {
   const [form, setForm] = useState(defaultForm)
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState(null)
 
   function handleChange(e) {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-    // Wire to your backend / EmailJS / Formspree here
-    setSubmitted(true)
+    setSubmitting(true)
+    setError(null)
+    try {
+      await submitContactMessage(form)
+      setSubmitted(true)
+    } catch (err) {
+      setError(getSubmitErrorMessage(err))
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -155,14 +167,19 @@ export default function Contact() {
                       />
                     </div>
 
+                    {error ? (
+                      <p className="sm:col-span-2 text-sm text-red-600" role="alert">{error}</p>
+                    ) : null}
+
                     {/* Submit */}
                     <div className="sm:col-span-2 pt-2">
                       <PixelButton
                         as="button"
                         type="submit"
                         variant="secondary"
-                        label="Send Message"
+                        label={submitting ? 'Sending…' : 'Send Message'}
                         className="w-full px-4 rounded-[5px] pxbtn--arrow-lg"
+                        disabled={submitting}
                       />
                     </div>
 

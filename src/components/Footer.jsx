@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import OptimizedImage from './OptimizedImage'
 import PixelButton from './PixelButton'
+import { getSubmitErrorMessage } from '../lib/formErrors'
+import { subscribeNewsletter } from '../services/newsletter'
 
 const FOOTER_LOGO = '/footer-logo.png'
 
@@ -22,13 +24,23 @@ const socials = [
 export default function Footer() {
   const [email, setEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState(null)
 
-  function handleSubscribe(e) {
+  async function handleSubscribe(e) {
     e.preventDefault()
     if (!email) return
-    // Wire this up to your backend / email service as needed
-    setSubmitted(true)
-    setEmail('')
+    setSubmitting(true)
+    setError(null)
+    try {
+      await subscribeNewsletter(email)
+      setSubmitted(true)
+      setEmail('')
+    } catch (err) {
+      setError(getSubmitErrorMessage(err))
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -100,15 +112,18 @@ export default function Footer() {
                   onChange={e => setEmail(e.target.value)}
                   placeholder="Enter your email"
                   required
+                  disabled={submitting}
                   className="footer-subscribe-input min-h-11 form-field min-w-0 flex-1 border-white/15 bg-white text-slate-900 sm:min-w-[220px]"
                 />
                 <PixelButton
                   as="button"
                   type="submit"
                   variant="gold"
-                  label="Subscribe"
+                  label={submitting ? 'Subscribing…' : 'Subscribe'}
                   className="rounded-[5px] px-3 pxbtn--arrow-lg"
+                  disabled={submitting}
                 />
+                {error ? <p className="text-sm text-red-300 sm:col-span-2" role="alert">{error}</p> : null}
               </form>
             )}
           </div>
