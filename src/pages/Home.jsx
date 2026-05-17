@@ -249,10 +249,10 @@ export default function Home() {
           <div className="grid grid-cols-1 items-center gap-12">
             {/* Text */}
             <div className="w-full">
-              {/* <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-accent-300/20 bg-accent-300/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-accent-200">
+              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-accent-300/20 bg-accent-300/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-accent-200">
                 <i className="fa-solid fa-star text-[10px]" />
                 Visa Processing | Interview Prep | Admissions
-              </div> */}
+              </div>
               <h1 className="font-inter hidden sm:block max-w-[900px] text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold leading-tight tracking-[-0.02em] text-white md:leading-[1.1] lg:leading-[1.15]">
                 Your Global Education{' '} Journey Starts Here.
               </h1>

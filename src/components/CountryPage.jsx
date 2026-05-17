@@ -19,7 +19,7 @@ export default function CountryPage({ title, heroImage, description, schoolsLabe
       <section className="relative isolate overflow-hidden bg-brand-800 text-white">
         <div className="hero-pattern absolute inset-0 bg-grid-fade opacity-50 pointer-events-none" />
 
-        <div className="shell pb-20 sm:pb-24 md:pb-28 pt-12 sm:pt-16 md:pt-25">
+        <div className="shell pb-34 sm:pb-36 md:pb-40 pt-12 sm:pt-16 md:pt-25">
           <div className="grid grid-cols-1 items-center gap-3">
             <span className="text-center hero-breadcrumb capitalize! font-semibold! block!">Destination</span>
             <h1 className="text-center hero-title mb-0 text-[32px]! md:text-[40px]! lg:text-[48px]! font-medium! tracking-[-2%] leading-[44px]! md:leading-[60px]!">{title}</h1>
@@ -32,7 +32,7 @@ export default function CountryPage({ title, heroImage, description, schoolsLabe
       {/* ── Main ── */}
       <main>
         {/* Hero image */}
-        <div className="shell -mt-15 relative z-10">
+        <div className="shell -mt-24 md:-mt-28 relative z-10">
           <OptimizedImage
             src={heroImage}
             alt={title}

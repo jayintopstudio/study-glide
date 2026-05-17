@@ -66,7 +66,7 @@ const schools = [
 export default function UK() {
   return (
     <CountryPage
-      title="Study In UK"
+      title="Study in the United Kingdom"
       heroImage={countryHeroImages.uk}
       description="The United Kingdom is one of the world's most prestigious education destinations. With renowned universities, shorter course durations, and the UK Graduate Route visa allowing up to 2 years of post-study work, the UK offers exceptional value and strong career outcomes for international students."
       schoolsLabel="List of Schools in the United Kingdom"
