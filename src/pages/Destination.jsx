@@ -128,7 +128,7 @@ export default function Destination() {
 
       {/* ── Search + destination mosaic grid ── */}
       <main>
-        <div className="shell py-16 sm:py-20 md:py-24">
+        <div className="shell py-16 sm:py-20 md:py-24 min-w-0 overflow-x-clip">
           <div className="dest-search-wrap">
             <span className="dest-search-icon" aria-hidden>
               <i className="fa-solid fa-magnifying-glass" />

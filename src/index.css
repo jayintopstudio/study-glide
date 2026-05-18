@@ -21,6 +21,12 @@
 body {
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+main {
+  overflow-x: clip;
+  max-width: 100%;
 }
 
 /* ─── Layout ───────────────────────────────────────────────── */
@@ -441,6 +447,10 @@ body {
 
 /* ─── Services grid (Home) ─────────────────────────────────── */
 .svc-section {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: clip;
   background: #fafafa;
   border-radius: 1rem;
   padding-inline: 1.5rem;
@@ -452,7 +462,9 @@ body {
 }
 .svc-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  width: 100%;
+  min-width: 0;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1px;
   overflow: hidden;
   border: 1px solid #e9eaeb;
@@ -463,6 +475,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  min-width: 0;
   min-height: 15rem;
   padding: 2rem 1.75rem;
   background: #fff;
@@ -470,6 +483,7 @@ body {
   text-decoration: none;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  overflow-wrap: anywhere;
 }
 .svc-card:hover {
   background: #fafafa;
@@ -520,13 +534,13 @@ body {
 
 @media (max-width: 1024px) {
   .svc-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 639px) {
   .svc-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -535,13 +549,16 @@ body {
 /* Desktop mosaic grid (Home destinations section) */
 .dest-grid {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
+  width: 100%;
+  min-width: 0;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: 1rem;
   margin-top: 1.5rem;
 }
 .dest-card {
   position: relative;
   display: block;
+  min-width: 0;
   overflow: hidden;
   min-height: 17.5rem;
   border-radius: 0.75rem;
@@ -682,19 +699,34 @@ body {
 }
 
 @media (max-width: 1023px) {
+  .dest-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
   .dest-card.span-6,
   .dest-card.span-4,
   .dest-card.span-3 {
-    grid-column: span 6;
+    grid-column: auto;
   }
 }
 
 @media (max-width: 639px) {
+  .dest-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
   .dest-card.span-6,
   .dest-card.span-4,
   .dest-card.span-3 {
-    grid-column: span 12;
+    grid-column: auto;
   }
+}
+
+/* Horizontal carousels (Home destinations, testimonials) */
+.carousel-scroll {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
 }
 
 /* Mobile / carousel cards */
@@ -705,9 +737,16 @@ body {
 }
 .destination-card-image {
   width: 100%;
-  height: 432px;
+  height: 22rem;
+  max-height: min(22rem, 70vh);
   object-fit: cover;
   transition: transform .5s ease;
+}
+@media (min-width: 640px) {
+  .destination-card-image {
+    height: 27rem;
+    max-height: 27rem;
+  }
 }
 .destination-card:hover .destination-card-image { transform: scale(1.05); }
 .destination-card-content {

@@ -333,8 +333,8 @@ export default function Home() {
 
         {/* ── Services ── */}
         <section className="svc-section py-12 sm:py-16 md:py-20">
-          <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between py-6">
-            <div>
+          <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between py-6 min-w-0">
+            <div className="min-w-0">
               <p className="eyebrow font-semibold! leading-6!">Our Expertise</p>
               <h2 className="section-title mt-4">Comprehensive Services</h2>
             </div>
@@ -342,7 +342,7 @@ export default function Home() {
               variant="gold"
               label="View All Services"
               to="/services"
-              className="min-w-[180px]"
+              className="w-full sm:w-auto min-w-0 sm:min-w-[180px] shrink-0"
             />
           </div>
           <div className="svc-grid">
@@ -361,9 +361,9 @@ export default function Home() {
         </section>
 
         {/* ── Destinations ── */}
-        <section id="destinations" className="shell py-16 sm:py-20 md:py-24 lg:py-28">
-          <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between py-6">
-            <div>
+        <section id="destinations" className="py-16 sm:py-20 md:py-24 lg:py-28 min-w-0">
+          <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between py-6 min-w-0">
+            <div className="min-w-0">
             <h2 className="section-title">Top Study Destinations</h2>
               <p className="tracking-[0%] uppercase text-[#535862] mt-4 text-lg md:text-xl">Global Reach</p>
             </div>
@@ -371,7 +371,7 @@ export default function Home() {
               variant="ghost"
               label="View All Destinations"
               to="/destination"
-              className="min-w-[180px]"
+              className="w-full sm:w-auto min-w-0 sm:min-w-[180px] shrink-0"
             />
           </div>
 
@@ -397,18 +397,17 @@ export default function Home() {
           </div>
 
           {/* Mobile / tablet: horizontal carousel */}
-          {/* <div className="lg:hidden">
+          {/* <div className="lg:hidden min-w-0">
             <div
               ref={destScrollRef}
-              className="-mx-4 flex gap-4 overflow-x-auto scroll-smooth px-4 pb-2 snap-x snap-mandatory touch-pan-x [scrollbar-width:thin]"
-              style={{ WebkitOverflowScrolling: 'touch' }}
+              className="carousel-scroll flex gap-4 overflow-x-auto scroll-smooth pb-2 snap-x snap-mandatory touch-pan-x [scrollbar-width:thin]"
             >
               {destinations.map(d => (
                 <Link
                   key={d.name}
                   to={d.to}
                   data-dest-slide
-                  className="group destination-card w-[min(100%,20rem)] shrink-0 snap-center"
+                  className="group destination-card w-[min(85vw,20rem)] shrink-0 snap-center"
                 >
                   <OptimizedImage src={d.img} alt={d.name} className="destination-card-image object-[52%_center]" />
                   <div className="destination-card-content">
@@ -430,13 +429,13 @@ export default function Home() {
         </section>
 
         {/* ── Testimonials ── */}
-        <section id="testimonial" className="py-16 sm:py-20 md:py-24 lg:py-28">
+        <section id="testimonial" className="py-16 sm:py-20 md:py-24 lg:py-28 min-w-0">
           <h2 className="font-display text-2xl sm:text-[36px] font-semibold text-slate-900">
             We&apos;re proud of our success stories
           </h2>
           <p className="mt-3 sm:text-xl tracking-[-2%] text-[#535862]">Hear from some of our amazing students we have helped.</p>
 
-          <div className="mt-10">
+          <div className="mt-10 min-w-0">
             {testimonialsLoading ? (
               <p className="text-[#535862]">Loading success stories…</p>
             ) : testimonialsError ? (
@@ -447,14 +446,13 @@ export default function Home() {
             <>
             <div
               ref={testimonialScrollRef}
-              className="-mx-4 flex gap-6 overflow-x-auto scroll-smooth px-4 pb-2 snap-x snap-mandatory touch-pan-x [scrollbar-width:thin]"
-              style={{ WebkitOverflowScrolling: 'touch' }}
+              className="carousel-scroll flex gap-6 overflow-x-auto scroll-smooth pb-2 snap-x snap-mandatory touch-pan-x [scrollbar-width:thin]"
             >
             {testimonials.map((t) => (
               <article
                 key={t.id}
                 data-testimonial-slide
-                className="group relative h-[480px] w-[min(100%,22rem)] shrink-0 snap-center overflow-hidden bg-slate-900 cursor-pointer shadow-lg ring-1 ring-white/10 sm:w-[min(100%,26rem)]"
+                className="group relative h-[480px] w-[min(85vw,22rem)] shrink-0 snap-center overflow-hidden bg-slate-900 cursor-pointer shadow-lg ring-1 ring-white/10 sm:w-[min(85vw,26rem)]"
                 onClick={() => setModalUrl(t.videoUrl)}
               >
                 <TestimonialVideo
