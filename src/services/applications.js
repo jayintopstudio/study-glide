@@ -1,4 +1,5 @@
 import { isSupabaseConfigured, supabase } from '../lib/supabase'
+import { notifyFormSubmission } from './formNotifications'
 
 export function buildApplicationRow(form, source) {
   const age = form.age === '' || form.age == null ? null : Number.parseInt(String(form.age), 10)
@@ -26,7 +27,13 @@ export async function submitApplication(form, source) {
     throw new Error('Supabase is not configured. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to your .env file.')
   }
 
-  const { error } = await supabase.from('applications').insert(buildApplicationRow(form, source))
+  const row = buildApplicationRow(form, source)
+  const { error } = await supabase.from('applications').insert(row)
 
   if (error) throw error
+
+  await notifyFormSubmission('applications', {
+    ...row,
+    created_at: new Date().toISOString(),
+  })
 }

@@ -21,12 +21,6 @@
 body {
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
-  overflow-x: clip;
-}
-
-main {
-  overflow-x: clip;
-  max-width: 100%;
 }
 
 /* ─── Layout ───────────────────────────────────────────────── */
@@ -361,14 +355,158 @@ main {
   opacity: 0;
 }
 
-.pxbtn:hover .pxbtn-arrow-out {
-  transform: translate(calc(-50% + 16px), calc(-50% - 16px));
-  opacity: 0;
+/* Desktop only: sliding arrow (see min-width block below) */
+
+/* Desktop only: pixel ripple + sliding arrow */
+@media (min-width: 1024px) {
+  .pxbtn:hover .pxbtn-arrow-out {
+    transform: translate(calc(-50% + 16px), calc(-50% - 16px));
+    opacity: 0;
+  }
+
+  .pxbtn:hover .pxbtn-arrow-in {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
 }
 
-.pxbtn:hover .pxbtn-arrow-in {
-  transform: translate(-50%, -50%);
-  opacity: 1;
+/* Below lg: solid hover colors only (no grid ripple, no arrow slide) */
+@media (max-width: 1023px) {
+  .pxbtn-grid {
+    display: none;
+  }
+
+  .pxbtn-cell.on {
+    opacity: 0;
+  }
+
+  .pxbtn-arrow {
+    transition: color 0.35s ease;
+  }
+
+  .pxbtn:hover .pxbtn-arrow-out,
+  .pxbtn:active .pxbtn-arrow-out {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+
+  .pxbtn:hover .pxbtn-arrow-in,
+  .pxbtn:active .pxbtn-arrow-in {
+    transform: translate(calc(-50% - 16px), calc(-50% + 16px));
+    opacity: 0;
+  }
+
+  .pxbtn--primary:hover,
+  .pxbtn--primary:active {
+    background: #16484b;
+  }
+  .pxbtn--primary:hover .pxbtn-label,
+  .pxbtn--primary:active .pxbtn-label {
+    color: #fff;
+  }
+  .pxbtn--primary:hover .pxbtn-arrow-box,
+  .pxbtn--primary:active .pxbtn-arrow-box {
+    background: #fff;
+  }
+  .pxbtn--primary:hover .pxbtn-arrow-out,
+  .pxbtn--primary:active .pxbtn-arrow-out {
+    color: #16484b;
+  }
+
+  .pxbtn--outline:hover,
+  .pxbtn--outline:active {
+    background: #16484b;
+    border-color: #e2c065;
+  }
+  .pxbtn--outline:hover .pxbtn-label,
+  .pxbtn--outline:active .pxbtn-label {
+    color: #fff;
+  }
+  .pxbtn--outline:hover .pxbtn-arrow-box,
+  .pxbtn--outline:active .pxbtn-arrow-box {
+    background: #16484b;
+  }
+  .pxbtn--outline:hover .pxbtn-arrow-out,
+  .pxbtn--outline:active .pxbtn-arrow-out {
+    color: #e2c065;
+  }
+
+  .pxbtn--ghost:hover,
+  .pxbtn--ghost:active {
+    border-color: #e2c065;
+  }
+  .pxbtn--ghost:hover .pxbtn-label,
+  .pxbtn--ghost:active .pxbtn-label {
+    color: #e2c065;
+  }
+  .pxbtn--ghost:hover .pxbtn-arrow-box,
+  .pxbtn--ghost:active .pxbtn-arrow-box {
+    background: #e2c065;
+  }
+  .pxbtn--ghost:hover .pxbtn-arrow-out,
+  .pxbtn--ghost:active .pxbtn-arrow-out {
+    color: #16484b;
+  }
+
+  .pxbtn--gold:hover,
+  .pxbtn--gold:active {
+    background: #16484b;
+  }
+  .pxbtn--gold:hover .pxbtn-label,
+  .pxbtn--gold:active .pxbtn-label {
+    color: #e2c065;
+  }
+  .pxbtn--gold:hover .pxbtn-arrow-box,
+  .pxbtn--gold:active .pxbtn-arrow-box {
+    background: #e2c065;
+  }
+  .pxbtn--gold:hover .pxbtn-arrow-out,
+  .pxbtn--gold:active .pxbtn-arrow-out {
+    color: #16484b;
+  }
+
+  .pxbtn--gold-mobile:hover,
+  .pxbtn--gold-mobile:active {
+    background: #16484b;
+  }
+  .pxbtn--gold-mobile:hover .pxbtn-label,
+  .pxbtn--gold-mobile:active .pxbtn-label {
+    color: #fff;
+  }
+  .pxbtn--gold-mobile:hover .pxbtn-arrow-box,
+  .pxbtn--gold-mobile:active .pxbtn-arrow-box {
+    background: #fff;
+  }
+  .pxbtn--gold-mobile:hover .pxbtn-arrow-out,
+  .pxbtn--gold-mobile:active .pxbtn-arrow-out {
+    color: #16484b;
+  }
+
+  .pxbtn--secondary:hover,
+  .pxbtn--secondary:active {
+    background: #131313;
+  }
+  .pxbtn--secondary:hover .pxbtn-label,
+  .pxbtn--secondary:active .pxbtn-label {
+    color: #fff;
+  }
+  .pxbtn--secondary:hover .pxbtn-arrow-box,
+  .pxbtn--secondary:active .pxbtn-arrow-box {
+    background: #16484b;
+  }
+  .pxbtn--secondary:hover .pxbtn-arrow-out,
+  .pxbtn--secondary:active .pxbtn-arrow-out {
+    color: #e2c065;
+  }
+
+  .pxbtn--secondary-applicants:hover .pxbtn-label,
+  .pxbtn--secondary-applicants:active .pxbtn-label {
+    color: #16484b;
+  }
+  .pxbtn--secondary-applicants:hover .pxbtn-arrow-out,
+  .pxbtn--secondary-applicants:active .pxbtn-arrow-out {
+    color: #e2c065;
+  }
 }
 
 /* ─── Section typography helpers ───────────────────────────── */
@@ -447,10 +585,6 @@ main {
 
 /* ─── Services grid (Home) ─────────────────────────────────── */
 .svc-section {
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
-  overflow-x: clip;
   background: #fafafa;
   border-radius: 1rem;
   padding-inline: 1.5rem;
@@ -462,9 +596,7 @@ main {
 }
 .svc-grid {
   display: grid;
-  width: 100%;
-  min-width: 0;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 1px;
   overflow: hidden;
   border: 1px solid #e9eaeb;
@@ -475,7 +607,6 @@ main {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  min-width: 0;
   min-height: 15rem;
   padding: 2rem 1.75rem;
   background: #fff;
@@ -483,7 +614,6 @@ main {
   text-decoration: none;
   cursor: pointer;
   transition: background-color 0.2s ease;
-  overflow-wrap: anywhere;
 }
 .svc-card:hover {
   background: #fafafa;
@@ -534,13 +664,13 @@ main {
 
 @media (max-width: 1024px) {
   .svc-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 639px) {
   .svc-grid {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: 1fr;
   }
 }
 
@@ -549,16 +679,13 @@ main {
 /* Desktop mosaic grid (Home destinations section) */
 .dest-grid {
   display: grid;
-  width: 100%;
-  min-width: 0;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-columns: repeat(12, 1fr);
   gap: 1rem;
   margin-top: 1.5rem;
 }
 .dest-card {
   position: relative;
   display: block;
-  min-width: 0;
   overflow: hidden;
   min-height: 17.5rem;
   border-radius: 0.75rem;
@@ -699,34 +826,19 @@ main {
 }
 
 @media (max-width: 1023px) {
-  .dest-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
   .dest-card.span-6,
   .dest-card.span-4,
   .dest-card.span-3 {
-    grid-column: auto;
+    grid-column: span 6;
   }
 }
 
 @media (max-width: 639px) {
-  .dest-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
   .dest-card.span-6,
   .dest-card.span-4,
   .dest-card.span-3 {
-    grid-column: auto;
+    grid-column: span 12;
   }
-}
-
-/* Horizontal carousels (Home destinations, testimonials) */
-.carousel-scroll {
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-x: contain;
 }
 
 /* Mobile / carousel cards */
@@ -737,16 +849,9 @@ main {
 }
 .destination-card-image {
   width: 100%;
-  height: 22rem;
-  max-height: min(22rem, 70vh);
+  height: 432px;
   object-fit: cover;
   transition: transform .5s ease;
-}
-@media (min-width: 640px) {
-  .destination-card-image {
-    height: 27rem;
-    max-height: 27rem;
-  }
 }
 .destination-card:hover .destination-card-image { transform: scale(1.05); }
 .destination-card-content {
@@ -965,6 +1070,46 @@ main {
   transition: border-color .2s;
 }
 .form-field:focus { border-color: #16484b; }
+
+/* Select: hide native chevron, show custom indicator */
+.form-select-wrap {
+  position: relative;
+  width: 100%;
+}
+.form-field--select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 3rem;
+  cursor: pointer;
+  background-color: #fff;
+}
+.form-field--select::-ms-expand {
+  display: none;
+}
+.form-select-chevron {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  color: #535862;
+  pointer-events: none;
+  transform: translateY(-50%) rotate(0deg);
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+.form-select-wrap:focus-within .form-field--select {
+  border-color: #16484b;
+}
+.form-select-wrap:focus-within .form-select-chevron,
+.form-select-wrap.is-open .form-select-chevron {
+  transform: translateY(-50%) rotate(180deg);
+  color: #16484b;
+}
+
 textarea.form-field { height: auto; padding-block: .75rem; resize: vertical; }
 
 /* ─── Page hero (inner pages) ──────────────────────────────── */

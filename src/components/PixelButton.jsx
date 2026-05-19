@@ -85,13 +85,39 @@ function usePixelGrid(btnRef, gridRef, cols, rows) {
       rippleOut()
     }
 
-    btn.addEventListener('mouseenter', onEnter)
-    btn.addEventListener('mouseleave', onLeave)
+    const motionMq = window.matchMedia('(min-width: 1024px)')
+
+    function clearCells() {
+      cells.forEach((item) => item.el.classList.remove('on'))
+    }
+
+    function bindMotion() {
+      if (!motionMq.matches) {
+        clearCells()
+        return
+      }
+      btn.addEventListener('mouseenter', onEnter)
+      btn.addEventListener('mouseleave', onLeave)
+    }
+
+    function unbindMotion() {
+      btn.removeEventListener('mouseenter', onEnter)
+      btn.removeEventListener('mouseleave', onLeave)
+      clearCells()
+    }
+
+    function onMotionChange() {
+      unbindMotion()
+      bindMotion()
+    }
+
+    bindMotion()
+    motionMq.addEventListener('change', onMotionChange)
 
     return () => {
       clearTimers()
-      btn.removeEventListener('mouseenter', onEnter)
-      btn.removeEventListener('mouseleave', onLeave)
+      unbindMotion()
+      motionMq.removeEventListener('change', onMotionChange)
     }
   }, [btnRef, gridRef, cols, rows])
 }

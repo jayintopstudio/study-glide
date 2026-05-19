@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Layout from '../components/Layout'
 import PixelButton from '../components/PixelButton'
+import FormSelect from '../components/FormSelect'
 import { getSubmitErrorMessage } from '../lib/formErrors'
 import { submitApplication } from '../services/applications'
 
@@ -139,22 +140,22 @@ export default function Applicants() {
                 {/* Gender */}
                 <div>
                   <label className="mb-2 block text-sm font-semibold text-slate-800">Gender*</label>
-                  <select name="gender" value={form.gender} onChange={handleChange} className="form-field" required>
+                  <FormSelect name="gender" value={form.gender} onChange={handleChange} required>
                     <option value="">Select Gender</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                     <option value="Other">Other</option>
-                  </select>
+                  </FormSelect>
                 </div>
 
                 {/* Preferred destination */}
                 <div>
                   <label className="mb-2 block text-sm font-semibold text-slate-800">Preferred study destination*</label>
-                  <select name="preferred_study_destination" value={form.preferred_study_destination} onChange={handleChange} className="form-field" required>
+                  <FormSelect name="preferred_study_destination" value={form.preferred_study_destination} onChange={handleChange} required>
                     {['UK', 'Canada', 'Ireland', 'Australia', 'USA'].map(d => (
                       <option key={d}>{d}</option>
                     ))}
-                  </select>
+                  </FormSelect>
                 </div>
 
                 {/* Other countries */}
@@ -173,31 +174,31 @@ export default function Applicants() {
                 {/* Program */}
                 <div>
                   <label className="mb-2 block text-sm font-semibold text-slate-800">Program interested in?*</label>
-                  <select name="program_interested" value={form.program_interested} onChange={handleChange} className="form-field" required>
+                  <FormSelect name="program_interested" value={form.program_interested} onChange={handleChange} required>
                     {['A Levels', 'Foundation', 'Undergraduate', 'Postgraduate'].map(p => (
                       <option key={p}>{p}</option>
                     ))}
-                  </select>
+                  </FormSelect>
                 </div>
 
                 {/* Intake period */}
                 <div>
                   <label className="mb-2 block text-sm font-semibold text-slate-800">Other programme interested in?*</label>
-                  <select name="intake_period" value={form.intake_period} onChange={handleChange} className="form-field" required>
+                  <FormSelect name="intake_period" value={form.intake_period} onChange={handleChange} required>
                     {['2026 intake', '2027 intake', 'Not sure yet'].map(i => (
                       <option key={i}>{i}</option>
                     ))}
-                  </select>
+                  </FormSelect>
                 </div>
 
                 {/* Highest qualification */}
                 <div>
                   <label className="mb-2 block text-sm font-semibold text-slate-800">Highest qualification?*</label>
-                  <select name="highest_qualification" value={form.highest_qualification} onChange={handleChange} className="form-field" required>
+                  <FormSelect name="highest_qualification" value={form.highest_qualification} onChange={handleChange} required>
                     {['SSCE', 'OND', 'HND', "Bachelor's degree"].map(q => (
                       <option key={q}>{q}</option>
                     ))}
-                  </select>
+                  </FormSelect>
                 </div>
 
                 {/* Other qualification */}
@@ -216,20 +217,20 @@ export default function Applicants() {
                 {/* Visa refusal */}
                 <div>
                   <label className="mb-2 block text-sm font-semibold text-slate-800">Any previous visa refusal?*</label>
-                  <select name="previous_visa_refusal" value={form.previous_visa_refusal} onChange={handleChange} className="form-field" required>
+                  <FormSelect name="previous_visa_refusal" value={form.previous_visa_refusal} onChange={handleChange} required>
                     <option>No</option>
                     <option>Yes</option>
-                  </select>
+                  </FormSelect>
                 </div>
 
                 {/* Referral source */}
                 <div>
                   <label className="mb-2 block text-sm font-semibold text-slate-800">How did you hear about us?*</label>
-                  <select name="referral_source" value={form.referral_source} onChange={handleChange} className="form-field" required>
+                  <FormSelect name="referral_source" value={form.referral_source} onChange={handleChange} required>
                     {['A friend', 'Instagram', 'Referral partner', 'Google search'].map(s => (
                       <option key={s}>{s}</option>
                     ))}
-                  </select>
+                  </FormSelect>
                 </div>
 
                 {error ? (

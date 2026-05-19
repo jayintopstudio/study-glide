@@ -1,7 +1,11 @@
 export function getSubmitErrorMessage(error) {
   if (!error) return 'Something went wrong. Please try again.'
 
-  if (error.code === '23505') {
+  if (
+    error.code === '23505' ||
+    error.status === 409 ||
+    String(error.message ?? '').includes('duplicate key')
+  ) {
     return 'This email is already subscribed.'
   }
 

@@ -1,5 +1,21 @@
 import { isSupabaseConfigured, supabase } from '../lib/supabase'
+import { notifyFormSubmission } from './formNotifications'
 
+function isDuplicateSubscriberError(error) {
+  if (!error) return false
+  const code = String(error.code ?? '')
+  const message = String(error.message ?? '')
+  return (
+    code === '23505' ||
+    error.status === 409 ||
+    message.includes('duplicate key') ||
+    message.includes('newsletter_subscribers_email_key')
+  )
+}
+
+/**
+ * @returns {'subscribed' | 'already_subscribed'}
+ */
 export async function subscribeNewsletter(email) {
   if (!isSupabaseConfigured()) {
     throw new Error('Supabase is not configured. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to your .env file.')
@@ -7,10 +23,18 @@ export async function subscribeNewsletter(email) {
 
   const normalized = email.trim().toLowerCase()
 
-  const { error } = await supabase.from('newsletter_subscribers').upsert(
-    { email: normalized },
-    { onConflict: 'email' },
-  )
+  const { error } = await supabase.from('newsletter_subscribers').insert({ email: normalized })
+
+  if (isDuplicateSubscriberError(error)) {
+    return 'already_subscribed'
+  }
 
   if (error) throw error
+
+  await notifyFormSubmission('newsletter_subscribers', {
+    email: normalized,
+    subscribed_at: new Date().toISOString(),
+  })
+
+  return 'subscribed'
 }

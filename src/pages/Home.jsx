@@ -2,6 +2,7 @@ import { useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import Layout from '../components/Layout'
 import PixelButton from '../components/PixelButton'
+import FormSelect from '../components/FormSelect'
 import OptimizedImage from '../components/OptimizedImage'
 import TestimonialVideo from '../components/TestimonialVideo'
 import useTestimonials from '../hooks/useTestimonials'
@@ -146,18 +147,18 @@ function ApplyForm() {
       </div>
       <div>
         <label className="mb-2 block text-sm font-medium text-[#414651]">Gender*</label>
-        <select name="gender" value={form.gender} onChange={handleChange} className="form-field" required>
+        <FormSelect name="gender" value={form.gender} onChange={handleChange} required>
           <option value="">Select Gender</option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
           <option value="Other">Other</option>
-        </select>
+        </FormSelect>
       </div>
       <div>
         <label className="mb-2 block text-sm font-medium text-[#414651]">Preferred study destination*</label>
-        <select name="preferred_study_destination" value={form.preferred_study_destination} onChange={handleChange} className="form-field" required>
+        <FormSelect name="preferred_study_destination" value={form.preferred_study_destination} onChange={handleChange} required>
           {['UK','Canada','Ireland','Australia','USA'].map(d => <option key={d}>{d}</option>)}
-        </select>
+        </FormSelect>
       </div>
       <div>
         <label className="mb-2 block text-sm font-medium text-[#414651]">Other countries interested in*</label>
@@ -165,21 +166,21 @@ function ApplyForm() {
       </div>
       <div>
         <label className="mb-2 block text-sm font-medium text-[#414651]">Program interested in?*</label>
-        <select name="program_interested" value={form.program_interested} onChange={handleChange} className="form-field" required>
+        <FormSelect name="program_interested" value={form.program_interested} onChange={handleChange} required>
           {['A Levels','Foundation','Undergraduate','Postgraduate'].map(p => <option key={p}>{p}</option>)}
-        </select>
+        </FormSelect>
       </div>
       <div>
         <label className="mb-2 block text-sm font-medium text-[#414651]">Intake period*</label>
-        <select name="intake_period" value={form.intake_period} onChange={handleChange} className="form-field" required>
+        <FormSelect name="intake_period" value={form.intake_period} onChange={handleChange} required>
           {['2026 intake','2027 intake','Not sure yet'].map(i => <option key={i}>{i}</option>)}
-        </select>
+        </FormSelect>
       </div>
       <div>
         <label className="mb-2 block text-sm font-medium text-[#414651]">Highest qualification?*</label>
-        <select name="highest_qualification" value={form.highest_qualification} onChange={handleChange} className="form-field" required>
+        <FormSelect name="highest_qualification" value={form.highest_qualification} onChange={handleChange} required>
           {['SSCE','OND','HND',"Bachelor's degree"].map(q => <option key={q}>{q}</option>)}
-        </select>
+        </FormSelect>
       </div>
       <div>
         <label className="mb-2 block text-sm font-medium text-[#414651]">Other qualification</label>
@@ -187,16 +188,16 @@ function ApplyForm() {
       </div>
       <div>
         <label className="mb-2 block text-sm font-medium text-[#414651]">Any previous visa refusal?*</label>
-        <select name="previous_visa_refusal" value={form.previous_visa_refusal} onChange={handleChange} className="form-field" required>
+        <FormSelect name="previous_visa_refusal" value={form.previous_visa_refusal} onChange={handleChange} required>
           <option>No</option>
           <option>Yes</option>
-        </select>
+        </FormSelect>
       </div>
       <div>
         <label className="mb-2 block text-sm font-medium text-[#414651]">How did you hear about us?*</label>
-        <select name="referral_source" value={form.referral_source} onChange={handleChange} className="form-field" required>
+        <FormSelect name="referral_source" value={form.referral_source} onChange={handleChange} required>
           {['A friend','Instagram','Referral partner','Google search'].map(s => <option key={s}>{s}</option>)}
-        </select>
+        </FormSelect>
       </div>
       {error ? (
         <p className="sm:col-span-2 text-sm text-red-600" role="alert">{error}</p>
@@ -333,8 +334,8 @@ export default function Home() {
 
         {/* ── Services ── */}
         <section className="svc-section py-12 sm:py-16 md:py-20">
-          <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between py-6 min-w-0">
-            <div className="min-w-0">
+          <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between py-6">
+            <div>
               <p className="eyebrow font-semibold! leading-6!">Our Expertise</p>
               <h2 className="section-title mt-4">Comprehensive Services</h2>
             </div>
@@ -342,7 +343,7 @@ export default function Home() {
               variant="gold"
               label="View All Services"
               to="/services"
-              className="w-full sm:w-auto min-w-0 sm:min-w-[180px] shrink-0"
+              className="min-w-[180px]"
             />
           </div>
           <div className="svc-grid">
@@ -361,9 +362,9 @@ export default function Home() {
         </section>
 
         {/* ── Destinations ── */}
-        <section id="destinations" className="py-16 sm:py-20 md:py-24 lg:py-28 min-w-0">
-          <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between py-6 min-w-0">
-            <div className="min-w-0">
+        <section id="destinations" className="shell py-16 sm:py-20 md:py-24 lg:py-28">
+          <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between py-6">
+            <div>
             <h2 className="section-title">Top Study Destinations</h2>
               <p className="tracking-[0%] uppercase text-[#535862] mt-4 text-lg md:text-xl">Global Reach</p>
             </div>
@@ -371,7 +372,7 @@ export default function Home() {
               variant="ghost"
               label="View All Destinations"
               to="/destination"
-              className="w-full sm:w-auto min-w-0 sm:min-w-[180px] shrink-0"
+              className="min-w-[180px]"
             />
           </div>
 
@@ -397,17 +398,18 @@ export default function Home() {
           </div>
 
           {/* Mobile / tablet: horizontal carousel */}
-          {/* <div className="lg:hidden min-w-0">
+          {/* <div className="lg:hidden">
             <div
               ref={destScrollRef}
-              className="carousel-scroll flex gap-4 overflow-x-auto scroll-smooth pb-2 snap-x snap-mandatory touch-pan-x [scrollbar-width:thin]"
+              className="-mx-4 flex gap-4 overflow-x-auto scroll-smooth px-4 pb-2 snap-x snap-mandatory touch-pan-x [scrollbar-width:thin]"
+              style={{ WebkitOverflowScrolling: 'touch' }}
             >
               {destinations.map(d => (
                 <Link
                   key={d.name}
                   to={d.to}
                   data-dest-slide
-                  className="group destination-card w-[min(85vw,20rem)] shrink-0 snap-center"
+                  className="group destination-card w-[min(100%,20rem)] shrink-0 snap-center"
                 >
                   <OptimizedImage src={d.img} alt={d.name} className="destination-card-image object-[52%_center]" />
                   <div className="destination-card-content">
@@ -429,13 +431,13 @@ export default function Home() {
         </section>
 
         {/* ── Testimonials ── */}
-        <section id="testimonial" className="py-16 sm:py-20 md:py-24 lg:py-28 min-w-0">
+        <section id="testimonial" className="py-16 sm:py-20 md:py-24 lg:py-28">
           <h2 className="font-display text-2xl sm:text-[36px] font-semibold text-slate-900">
             We&apos;re proud of our success stories
           </h2>
           <p className="mt-3 sm:text-xl tracking-[-2%] text-[#535862]">Hear from some of our amazing students we have helped.</p>
 
-          <div className="mt-10 min-w-0">
+          <div className="mt-10">
             {testimonialsLoading ? (
               <p className="text-[#535862]">Loading success stories…</p>
             ) : testimonialsError ? (
@@ -446,13 +448,14 @@ export default function Home() {
             <>
             <div
               ref={testimonialScrollRef}
-              className="carousel-scroll flex gap-6 overflow-x-auto scroll-smooth pb-2 snap-x snap-mandatory touch-pan-x [scrollbar-width:thin]"
+              className="-mx-4 flex gap-6 overflow-x-auto scroll-smooth px-4 pb-2 snap-x snap-mandatory touch-pan-x [scrollbar-width:thin]"
+              style={{ WebkitOverflowScrolling: 'touch' }}
             >
             {testimonials.map((t) => (
               <article
                 key={t.id}
                 data-testimonial-slide
-                className="group relative h-[480px] w-[min(85vw,22rem)] shrink-0 snap-center overflow-hidden bg-slate-900 cursor-pointer shadow-lg ring-1 ring-white/10 sm:w-[min(85vw,26rem)]"
+                className="group relative h-[480px] w-[min(100%,22rem)] shrink-0 snap-center overflow-hidden bg-slate-900 cursor-pointer shadow-lg ring-1 ring-white/10 sm:w-[min(100%,26rem)]"
                 onClick={() => setModalUrl(t.videoUrl)}
               >
                 <TestimonialVideo

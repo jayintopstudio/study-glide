@@ -26,6 +26,7 @@ export default function Footer() {
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState(null)
+  const [successMessage, setSuccessMessage] = useState('Thanks for subscribing!')
 
   async function handleSubscribe(e) {
     e.preventDefault()
@@ -33,7 +34,12 @@ export default function Footer() {
     setSubmitting(true)
     setError(null)
     try {
-      await subscribeNewsletter(email)
+      const result = await subscribeNewsletter(email)
+      setSuccessMessage(
+        result === 'already_subscribed'
+          ? "You're already subscribed with this email."
+          : 'Thanks for subscribing!',
+      )
       setSubmitted(true)
       setEmail('')
     } catch (err) {
@@ -102,7 +108,7 @@ export default function Footer() {
 
             {submitted ? (
               <p className="mt-5 text-[#E2C065] font-semibold text-sm">
-                ✓ Thanks for subscribing!
+                ✓ {successMessage}
               </p>
             ) : (
               <form onSubmit={handleSubscribe} className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-stretch">
