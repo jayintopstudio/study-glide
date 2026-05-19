@@ -12,7 +12,7 @@ const EMAIL_FUNCTION = 'resend-email'
 export async function notifyFormSubmission(table, record) {
   if (!isSupabaseConfigured() || !supabase || !record) return
 
-  const { error } = await supabase.functions.invoke(EMAIL_FUNCTION, {
+  const { data, error } = await supabase.functions.invoke(EMAIL_FUNCTION, {
     body: {
       type: 'INSERT',
       table,
@@ -24,5 +24,13 @@ export async function notifyFormSubmission(table, record) {
 
   if (error) {
     console.error(`[${EMAIL_FUNCTION}]`, error.message)
+    return
+  }
+
+  if (data?.delivery?.user?.status !== 'sent') {
+    console.warn(`[${EMAIL_FUNCTION}] user email not sent`, data?.delivery?.user)
+  }
+  if (data?.delivery?.admin?.status !== 'sent') {
+    console.warn(`[${EMAIL_FUNCTION}] admin email not sent`, data?.delivery?.admin)
   }
 }
