@@ -309,12 +309,12 @@ export default function Home() {
             Trusted by 4,000+ Universities
             </p>
           </div>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-6 sm:hidden">
+          {/* <div className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-6 sm:hidden">
             {universities.map(u => (
               <OptimizedImage key={u.alt} src={u.src} alt={u.alt} className="logo-image max-h-12 w-auto object-contain" />
             ))}
-          </div>
-          <div className="logo-marquee mt-8 hidden sm:block">
+          </div> */}
+          <div className="logo-marquee mt-8">
             <div className="logo-marquee-track">
               {/* Group 1 */}
               <div className="logo-marquee-group">
