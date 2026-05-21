@@ -36,10 +36,16 @@ const services = [
   { n: '08', title: 'Pre-Departure & Travel Guidance', body: 'Comprehensive briefings to help you prepare for life abroad, travel, and successful settlement.' },
 ]
 
-/** 12-column mosaic spans (desktop lg+ only) */
+/** Responsive grid spans (1 col mobile, 2 col sm, mosaic lg+) — same as Destination page */
 const DEST_GRID_SPANS = [
-  'lg:col-span-6', 'lg:col-span-3', 'lg:col-span-3', 'lg:col-span-3',
-  'lg:col-span-3', 'lg:col-span-6', 'lg:col-span-6', 'lg:col-span-6',
+  'col-span-1 sm:col-span-1 lg:col-span-6',
+  'col-span-1 sm:col-span-1 lg:col-span-3',
+  'col-span-1 sm:col-span-1 lg:col-span-3',
+  'col-span-1 sm:col-span-1 lg:col-span-3',
+  'col-span-1 sm:col-span-1 lg:col-span-3',
+  'col-span-1 sm:col-span-1 lg:col-span-6',
+  'col-span-1 sm:col-span-1 lg:col-span-6',
+  'col-span-1 sm:col-span-1 lg:col-span-6',
 ]
 
 const destinations = [
@@ -223,17 +229,8 @@ function ApplyForm() {
 
 export default function Home() {
   const [modalUrl, setModalUrl] = useState(null)
-  const destScrollRef = useRef(null)
   const testimonialScrollRef = useRef(null)
   const { testimonials, loading: testimonialsLoading, error: testimonialsError } = useTestimonials()
-
-  function scrollDestCarousel(dir) {
-    const el = destScrollRef.current
-    if (!el) return
-    const slide = el.querySelector('[data-dest-slide]')
-    const step = (slide?.offsetWidth ?? 280) + 16
-    el.scrollBy({ left: dir * step, behavior: 'smooth' })
-  }
 
   function scrollTestimonialCarousel(dir) {
     const el = testimonialScrollRef.current
@@ -387,13 +384,13 @@ export default function Home() {
             />
           </div>
 
-          {/* Desktop: mosaic grid (no .dest-grid class — its CSS display:grid overrode Tailwind hidden on iOS) */}
-          <div className="mt-6 hidden gap-4 lg:grid lg:grid-cols-12">
+          {/* Destinations grid — same responsive layout as /destination (1 col mobile, 2 col sm, mosaic lg+) */}
+          <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-12">
             {destinations.map((d, i) => (
               <Link
                 key={d.name}
                 to={d.to}
-                className={`dest-card min-h-[17.5rem] ${DEST_GRID_SPANS[i]} ${i === 0 || i === 5 || i === 6 || i === 7 ? 'lg:min-h-80' : ''}`}
+                className={`dest-card min-h-[17.5rem] sm:min-h-[20rem] ${DEST_GRID_SPANS[i]}`}
               >
                 <OptimizedImage src={d.img} alt="" decorative className="dest-card__media" />
                 <span className="dest-card__tag">{d.tag}</span>
@@ -408,8 +405,8 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Mobile / tablet: horizontal carousel */}
-          <div className="mt-6 w-full min-w-0 max-w-full overflow-hidden lg:hidden">
+          {/* Mobile / tablet: horizontal carousel (disabled — using dest-card grid above) */}
+          {/* <div className="mt-6 w-full min-w-0 max-w-full overflow-hidden lg:hidden">
             <div
               ref={destScrollRef}
               className="flex max-w-full min-w-0 snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain scroll-smooth pb-2 touch-pan-x [-webkit-overflow-scrolling:touch] [scrollbar-width:thin]"
@@ -441,7 +438,7 @@ export default function Home() {
                 <i className="fa-solid fa-arrow-right" />
               </button>
             </div>
-          </div>
+          </div> */}
         </section>
 
         {/* ── Testimonials ── */}

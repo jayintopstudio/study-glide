@@ -35,15 +35,6 @@ main {
   min-width: 0;
 }
 
-/* Lock page scroll when mobile menu is open (iOS Safari) */
-html.menu-open,
-html.menu-open body {
-  overflow: hidden;
-}
-html.menu-open main {
-  visibility: hidden;
-}
-
 /* ─── Layout ───────────────────────────────────────────────── */
 .shell {
   width: 100%;
