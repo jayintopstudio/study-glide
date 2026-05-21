@@ -35,11 +35,13 @@ main {
   min-width: 0;
 }
 
-/* Full-screen mobile nav (portaled to body for iOS Safari) */
-.nav-mobile-overlay {
-  min-height: 100vh;
-  min-height: 100dvh;
-  height: 100dvh;
+/* Lock page scroll when mobile menu is open (iOS Safari) */
+html.menu-open,
+html.menu-open body {
+  overflow: hidden;
+}
+html.menu-open main {
+  visibility: hidden;
 }
 
 /* ─── Layout ───────────────────────────────────────────────── */
@@ -719,13 +721,8 @@ main {
 
 /* ─── Destination cards ────────────────────────────────────── */
 
-/* Desktop mosaic grid (Home destinations section) */
-.dest-grid {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 1rem;
-  margin-top: 1.5rem;
-}
+/* Desktop mosaic grid — layout via Tailwind (lg:grid-cols-12). Do not set display:grid here;
+   it overrides Tailwind `hidden` on iOS Safari when both classes are on the same element. */
 .dest-card {
   position: relative;
   display: block;
@@ -811,23 +808,7 @@ main {
   background: #e2c065;
   color: #16484b;
 }
-.dest-card.span-6 {
-  grid-column: span 6;
-  min-height: 20rem;
-}
-.dest-card.span-4 {
-  grid-column: span 4;
-}
-.dest-card.span-3 {
-  grid-column: span 3;
-}
-
-.dest-grid--page {
-  margin-top: 0;
-}
-.dest-grid--page .dest-card {
-  min-height: 20rem;
-}
+/* col-span utilities in JSX replace .span-* classes */
 
 /* Destination page search */
 .dest-search-wrap {
@@ -868,23 +849,7 @@ main {
   font-size: 1rem;
 }
 
-@media (max-width: 1023px) {
-  .dest-card.span-6,
-  .dest-card.span-4,
-  .dest-card.span-3 {
-    grid-column: span 6;
-  }
-}
-
-@media (max-width: 639px) {
-  .dest-card.span-6,
-  .dest-card.span-4,
-  .dest-card.span-3 {
-    grid-column: span 12;
-  }
-}
-
-/* Mobile / carousel cards */
+/* Mobile / carousel cards (legacy; Home carousel uses Tailwind) */
 .destination-card {
   position: relative;
   overflow: hidden;

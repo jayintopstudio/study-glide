@@ -6,7 +6,16 @@ import { countryHeroImages } from '../data/countryHeroImages'
 
 // ─── Data ────────────────────────────────────────────────────
 
-const DEST_GRID_SPANS = ['span-6', 'span-3', 'span-3', 'span-3', 'span-3', 'span-6', 'span-6', 'span-6']
+const DEST_GRID_SPANS = [
+  'col-span-1 sm:col-span-1 lg:col-span-6',
+  'col-span-1 sm:col-span-1 lg:col-span-3',
+  'col-span-1 sm:col-span-1 lg:col-span-3',
+  'col-span-1 sm:col-span-1 lg:col-span-3',
+  'col-span-1 sm:col-span-1 lg:col-span-3',
+  'col-span-1 sm:col-span-1 lg:col-span-6',
+  'col-span-1 sm:col-span-1 lg:col-span-6',
+  'col-span-1 sm:col-span-1 lg:col-span-6',
+]
 
 const destinations = [
   {
@@ -148,12 +157,12 @@ export default function Destination() {
               No destinations match &ldquo;{query}&rdquo;. Try another search.
             </p>
           ) : (
-            <div className="dest-grid dest-grid--page">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-12">
               {filtered.map((d, i) => (
                 <Link
                   key={d.to}
                   to={d.to}
-                  className={`dest-card ${DEST_GRID_SPANS[i % DEST_GRID_SPANS.length]}`}
+                  className={`dest-card min-h-[17.5rem] sm:min-h-[20rem] ${DEST_GRID_SPANS[i % DEST_GRID_SPANS.length]}`}
                 >
                   <OptimizedImage src={d.img} alt="" decorative className="dest-card__media" />
                   <span className="dest-card__tag">{d.tag}</span>

@@ -19,10 +19,32 @@ export default function Navbar() {
 
   useEffect(() => {
     if (!mobileOpen) return
-    const prev = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
+    const scrollY = window.scrollY
+    const { style: htmlStyle } = document.documentElement
+    const { style: bodyStyle } = document.body
+    const prevHtmlOverflow = htmlStyle.overflow
+    const prevBodyOverflow = bodyStyle.overflow
+    const prevBodyPosition = bodyStyle.position
+    const prevBodyTop = bodyStyle.top
+    const prevBodyWidth = bodyStyle.width
+
+    document.documentElement.classList.add('menu-open')
+    htmlStyle.overflow = 'hidden'
+    bodyStyle.overflow = 'hidden'
+    bodyStyle.position = 'fixed'
+    bodyStyle.top = `-${scrollY}px`
+    bodyStyle.left = '0'
+    bodyStyle.right = '0'
+    bodyStyle.width = '100%'
+
     return () => {
-      document.body.style.overflow = prev
+      document.documentElement.classList.remove('menu-open')
+      htmlStyle.overflow = prevHtmlOverflow
+      bodyStyle.overflow = prevBodyOverflow
+      bodyStyle.position = prevBodyPosition
+      bodyStyle.top = prevBodyTop
+      bodyStyle.width = prevBodyWidth
+      window.scrollTo(0, scrollY)
     }
   }, [mobileOpen])
 
@@ -118,12 +140,12 @@ export default function Navbar() {
       {mobileOpen &&
         createPortal(
           <div
-            className="nav-mobile-overlay fixed inset-0 z-[10001] flex flex-col bg-[#16484B] lg:hidden"
+            className="fixed inset-0 z-[99999] flex h-dvh max-h-dvh w-full flex-col overflow-hidden bg-brand-900 lg:hidden"
             role="dialog"
             aria-modal="true"
             aria-label="Main menu"
           >
-            <div className="flex shrink-0 items-center justify-between px-5 pt-[max(1rem,env(safe-area-inset-top))] pb-4">
+            <div className="flex shrink-0 items-center justify-between border-b border-white/10 px-5 pt-[max(1rem,env(safe-area-inset-top))] pb-4">
               <Link to="/" className="shrink-0" onClick={() => setMobileOpen(false)}>
                 <OptimizedImage src={LOGO} alt="StudyGlide logo" className="h-10 w-auto" />
               </Link>
@@ -137,8 +159,8 @@ export default function Navbar() {
               </button>
             </div>
 
-            <nav className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 py-8 [-webkit-overflow-scrolling:touch]">
-              <div className="flex flex-col gap-8">
+            <nav className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain px-5 py-10 [-webkit-overflow-scrolling:touch]">
+              <div className="flex flex-col gap-6">
                 {navLinks.map(({ to, label, menuLabel }) => (
                   <NavLink
                     key={to}
@@ -146,7 +168,7 @@ export default function Navbar() {
                     end={to === '/'}
                     onClick={() => setMobileOpen(false)}
                     className={({ isActive }) =>
-                      `block font-inter font-semibold tracking-tight transition-colors hover:text-[#E2C065] ${isActive ? 'text-[#E2C065]' : 'text-white'}`
+                      `block font-inter text-2xl font-semibold tracking-tight transition-colors hover:text-accent-300 ${isActive ? 'text-accent-300' : 'text-white'}`
                     }
                   >
                     {menuLabel ?? label}

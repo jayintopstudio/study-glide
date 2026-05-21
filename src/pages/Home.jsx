@@ -36,8 +36,11 @@ const services = [
   { n: '08', title: 'Pre-Departure & Travel Guidance', body: 'Comprehensive briefings to help you prepare for life abroad, travel, and successful settlement.' },
 ]
 
-/** 12-column mosaic spans (desktop grid only) */
-const DEST_GRID_SPANS = ['span-6', 'span-3', 'span-3', 'span-3', 'span-3', 'span-6', 'span-6', 'span-6']
+/** 12-column mosaic spans (desktop lg+ only) */
+const DEST_GRID_SPANS = [
+  'lg:col-span-6', 'lg:col-span-3', 'lg:col-span-3', 'lg:col-span-3',
+  'lg:col-span-3', 'lg:col-span-6', 'lg:col-span-6', 'lg:col-span-6',
+]
 
 const destinations = [
   { tag: 'UK', img: countryHeroImages.uk, name: 'United Kingdom', desc: 'World-renowned universities, shorter course durations, and excellent post-study work opportunities.',           to: '/destination/uk' },
@@ -314,7 +317,7 @@ export default function Home() {
               <OptimizedImage key={u.alt} src={u.src} alt={u.alt} className="logo-image max-h-12 w-auto object-contain" />
             ))}
           </div> */}
-          <div className="logo-marquee mt-8">
+          <div className="logo-marquee mt-8 w-full max-w-full min-w-0 overflow-x-clip">
             <div className="logo-marquee-track">
               {/* Group 1 */}
               <div className="logo-marquee-group">
@@ -332,9 +335,9 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── Services ── */}
-        <section className="svc-section py-12 sm:py-16 md:py-20">
-          <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between py-6">
+        {/* ── Services (Tailwind grid — custom .svc-grid display broke mobile breakpoints on iOS) ── */}
+        <section className="min-w-0 overflow-x-clip bg-[#fafafa] px-5 py-12 sm:rounded-2xl sm:px-8 sm:py-16 md:py-20">
+          <div className="flex flex-col gap-6 py-6 md:flex-row md:items-start md:justify-between">
             <div>
               <p className="eyebrow font-semibold! leading-6!">Our Expertise</p>
               <h2 className="section-title mt-4">Comprehensive Services</h2>
@@ -343,16 +346,24 @@ export default function Home() {
               variant="gold"
               label="View All Services"
               to="/services"
-              className="min-w-[180px]"
+              className="w-full min-w-0 sm:w-auto sm:min-w-[180px]"
             />
           </div>
-          <div className="svc-grid">
+          <div className="grid grid-cols-1 gap-px overflow-hidden border border-[#e9eaeb] bg-[#e9eaeb] sm:rounded-2xl md:grid-cols-2 lg:grid-cols-4">
             {services.map((s) => (
-              <Link key={s.n} to="/services" className="svc-card">
-                <div className="svc-num">{s.n}</div>
-                <h3 className="svc-title">{s.title}</h3>
-                <p className="svc-desc">{s.body}</p>
-                <span className="svc-arrow">
+              <Link
+                key={s.n}
+                to="/services"
+                className="group flex min-h-60 flex-col gap-4 bg-white p-6 text-inherit no-underline sm:p-8"
+              >
+                <div className="inline-flex h-8 w-11 items-center justify-center rounded-md border border-[#e9eaeb] bg-white text-[0.8125rem] font-semibold text-[#181d27]">
+                  {s.n}
+                </div>
+                <h3 className="m-0 font-inter text-[1.0625rem] font-semibold leading-snug text-brand-800">
+                  {s.title}
+                </h3>
+                <p className="m-0 text-sm leading-relaxed text-[#535862]">{s.body}</p>
+                <span className="mt-auto inline-flex items-center gap-1.5 text-[0.8125rem] font-semibold text-brand-800 opacity-100 md:opacity-0 md:transition-all md:duration-200 md:group-hover:translate-x-0 md:group-hover:opacity-100 md:-translate-x-1">
                   Learn more
                   <i className="fa-solid fa-arrow-right text-[0.75rem]" aria-hidden />
                 </span>
@@ -376,13 +387,13 @@ export default function Home() {
             />
           </div>
 
-          {/* Desktop: mosaic grid */}
-          <div className="dest-grid hidden lg:grid">
+          {/* Desktop: mosaic grid (no .dest-grid class — its CSS display:grid overrode Tailwind hidden on iOS) */}
+          <div className="mt-6 hidden gap-4 lg:grid lg:grid-cols-12">
             {destinations.map((d, i) => (
               <Link
                 key={d.name}
                 to={d.to}
-                className={`dest-card ${DEST_GRID_SPANS[i]}`}
+                className={`dest-card min-h-[17.5rem] ${DEST_GRID_SPANS[i]} ${i === 0 || i === 5 || i === 6 || i === 7 ? 'lg:min-h-80' : ''}`}
               >
                 <OptimizedImage src={d.img} alt="" decorative className="dest-card__media" />
                 <span className="dest-card__tag">{d.tag}</span>
@@ -398,22 +409,26 @@ export default function Home() {
           </div>
 
           {/* Mobile / tablet: horizontal carousel */}
-          <div className="lg:hidden carousel-scroller-wrap">
+          <div className="mt-6 w-full min-w-0 max-w-full overflow-hidden lg:hidden">
             <div
               ref={destScrollRef}
-              className="carousel-scroller gap-4 scroll-smooth pb-2 snap-x snap-mandatory touch-pan-x [scrollbar-width:thin]"
+              className="flex max-w-full min-w-0 snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain scroll-smooth pb-2 touch-pan-x [-webkit-overflow-scrolling:touch] [scrollbar-width:thin]"
             >
               {destinations.map(d => (
                 <Link
                   key={d.name}
                   to={d.to}
                   data-dest-slide
-                  className="group destination-card w-[min(100%,20rem)] shrink-0 snap-center"
+                  className="relative w-[min(100%,18.75rem)] shrink-0 snap-center overflow-hidden sm:w-80"
                 >
-                  <OptimizedImage src={d.img} alt={d.name} className="destination-card-image object-[52%_center]" />
-                  <div className="destination-card-content">
-                    <h3 className="font-display text-[2rem] leading-tight">{d.name}</h3>
-                    <p className="text-sm leading-6 text-white/80">{d.desc}</p>
+                  <OptimizedImage
+                    src={d.img}
+                    alt={d.name}
+                    className="h-80 w-full object-cover object-[52%_center] sm:h-[27rem]"
+                  />
+                  <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-brand-900/90 via-brand-900/20 to-transparent p-6 text-white">
+                    <h3 className="font-display text-2xl leading-tight">{d.name}</h3>
+                    <p className="mt-2 text-sm leading-6 text-white/80">{d.desc}</p>
                   </div>
                 </Link>
               ))}
