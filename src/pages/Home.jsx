@@ -302,7 +302,7 @@ export default function Home() {
       </section>
 
       {/* ── University logo marquee ── */}
-      <div className="shell">
+      <div className="shell min-w-0 overflow-x-clip">
         <section className="py-16 md:py-20">
           <div className="text-center">
             <p className="font-medium text-[#535862]">
@@ -362,7 +362,7 @@ export default function Home() {
         </section>
 
         {/* ── Destinations ── */}
-        <section id="destinations" className="shell py-16 sm:py-20 md:py-24 lg:py-28">
+        <section id="destinations" className="py-16 sm:py-20 md:py-24 lg:py-28 min-w-0">
           <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between py-6">
             <div>
             <h2 className="section-title">Top Study Destinations</h2>
@@ -398,11 +398,10 @@ export default function Home() {
           </div>
 
           {/* Mobile / tablet: horizontal carousel */}
-          {/* <div className="lg:hidden">
+          <div className="lg:hidden carousel-scroller-wrap">
             <div
               ref={destScrollRef}
-              className="-mx-4 flex gap-4 overflow-x-auto scroll-smooth px-4 pb-2 snap-x snap-mandatory touch-pan-x [scrollbar-width:thin]"
-              style={{ WebkitOverflowScrolling: 'touch' }}
+              className="carousel-scroller gap-4 scroll-smooth pb-2 snap-x snap-mandatory touch-pan-x [scrollbar-width:thin]"
             >
               {destinations.map(d => (
                 <Link
@@ -427,7 +426,7 @@ export default function Home() {
                 <i className="fa-solid fa-arrow-right" />
               </button>
             </div>
-          </div> */}
+          </div>
         </section>
 
         {/* ── Testimonials ── */}
@@ -446,10 +445,10 @@ export default function Home() {
               <p className="text-[#535862]">Success stories coming soon.</p>
             ) : (
             <>
+            <div className="carousel-scroller-wrap">
             <div
               ref={testimonialScrollRef}
-              className="-mx-4 flex gap-6 overflow-x-auto scroll-smooth px-4 pb-2 snap-x snap-mandatory touch-pan-x [scrollbar-width:thin]"
-              style={{ WebkitOverflowScrolling: 'touch' }}
+              className="carousel-scroller gap-6 scroll-smooth pb-2 snap-x snap-mandatory touch-pan-x [scrollbar-width:thin]"
             >
             {testimonials.map((t) => (
               <article
@@ -482,6 +481,7 @@ export default function Home() {
                 </div>
               </article>
             ))}
+            </div>
             </div>
             <div className="testimonial-nav justify-start">
               <button type="button" onClick={() => scrollTestimonialCarousel(-1)} className="nav-btn-prev" aria-label="Previous testimonials">

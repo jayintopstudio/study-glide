@@ -18,9 +18,28 @@
 /* ─── Base ─────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; }
 
+html {
+  overflow-x: clip;
+}
+
 body {
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+  max-width: 100%;
+}
+
+main {
+  overflow-x: clip;
+  width: 100%;
+  min-width: 0;
+}
+
+/* Full-screen mobile nav (portaled to body for iOS Safari) */
+.nav-mobile-overlay {
+  min-height: 100vh;
+  min-height: 100dvh;
+  height: 100dvh;
 }
 
 /* ─── Layout ───────────────────────────────────────────────── */
@@ -532,7 +551,12 @@ body {
 /* ─── Logo marquee ─────────────────────────────────────────── */
 .logo-marquee {
   overflow: hidden;
+  overflow-x: clip;
   position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  isolation: isolate;
 }
 .logo-marquee::before,
 .logo-marquee::after {
@@ -588,6 +612,9 @@ body {
   background: #fafafa;
   border-radius: 1rem;
   padding-inline: 1.5rem;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: clip;
 }
 @media (min-width: 640px) {
   .svc-section {
@@ -672,6 +699,22 @@ body {
   .svc-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* Horizontal carousels — scroll inside container (prevents iOS page-wide overflow) */
+.carousel-scroller-wrap {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+.carousel-scroller {
+  display: flex;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  min-width: 0;
+  max-width: 100%;
 }
 
 /* ─── Destination cards ────────────────────────────────────── */

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { NavLink, Link } from 'react-router-dom'
 import OptimizedImage from './OptimizedImage'
 import PixelButton from './PixelButton'
@@ -113,58 +114,60 @@ export default function Navbar() {
         </nav>
       </div>
 
-      {/* ── Mobile full-screen overlay (does not push page content) ── */}
-      {mobileOpen && (
-        <div
-          className="fixed inset-0 z-[10000] flex h-fit flex-col bg-[#16484B] lg:hidden"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Main menu"
-        >
-          <div className="flex shrink-0 items-center justify-between px-5 pt-[max(1rem,env(safe-area-inset-top))] pb-4">
-            <Link to="/" className="shrink-0" onClick={() => setMobileOpen(false)}>
-              <OptimizedImage src={LOGO} alt="StudyGlide logo" className="h-10 w-auto" />
-            </Link>
-            <button
-              type="button"
-              className="flex h-11 w-11 items-center justify-center text-xl text-white transition hover:text-[#E2C065]"
-              onClick={() => setMobileOpen(false)}
-              aria-label="Close menu"
-            >
-              <i className="fa-solid fa-xmark" />
-            </button>
-          </div>
-
-          <nav className="min-h-0 flex-1 overflow-y-auto px-5 py-8">
-            <div className="flex flex-col gap-8">
-              {navLinks.map(({ to, label, menuLabel }) => (
-                <NavLink
-                  key={to}
-                  to={to}
-                  end={to === '/'}
-                  onClick={() => setMobileOpen(false)}
-                  className={({ isActive }) =>
-                    `block font-inter font-semibold tracking-tight transition-colors hover:text-[#E2C065] ${isActive ? 'text-[#E2C065]' : 'text-white'}`
-                  }
-                >
-                  {menuLabel ?? label}
-                </NavLink>
-              ))}
+      {/* Portal + full viewport height — avoids iOS clipping behind hero (h-fit bug) */}
+      {mobileOpen &&
+        createPortal(
+          <div
+            className="nav-mobile-overlay fixed inset-0 z-[10001] flex flex-col bg-[#16484B] lg:hidden"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Main menu"
+          >
+            <div className="flex shrink-0 items-center justify-between px-5 pt-[max(1rem,env(safe-area-inset-top))] pb-4">
+              <Link to="/" className="shrink-0" onClick={() => setMobileOpen(false)}>
+                <OptimizedImage src={LOGO} alt="StudyGlide logo" className="h-10 w-auto" />
+              </Link>
+              <button
+                type="button"
+                className="flex h-11 w-11 items-center justify-center text-xl text-white transition hover:text-[#E2C065]"
+                onClick={() => setMobileOpen(false)}
+                aria-label="Close menu"
+              >
+                <i className="fa-solid fa-xmark" />
+              </button>
             </div>
-          </nav>
 
-          <div className="shrink-0 border-t border-white/10 px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-5">
-            <PixelButton
-              to="/contact"
-              variant="gold-mobile"
-              label="Get in Touch"
-              labelClassName="!pl-0"
-              className="sm:max-w-full!"
-              onClick={() => setMobileOpen(false)}
-            />
-          </div>
-        </div>
-      )}
+            <nav className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 py-8 [-webkit-overflow-scrolling:touch]">
+              <div className="flex flex-col gap-8">
+                {navLinks.map(({ to, label, menuLabel }) => (
+                  <NavLink
+                    key={to}
+                    to={to}
+                    end={to === '/'}
+                    onClick={() => setMobileOpen(false)}
+                    className={({ isActive }) =>
+                      `block font-inter font-semibold tracking-tight transition-colors hover:text-[#E2C065] ${isActive ? 'text-[#E2C065]' : 'text-white'}`
+                    }
+                  >
+                    {menuLabel ?? label}
+                  </NavLink>
+                ))}
+              </div>
+            </nav>
+
+            <div className="shrink-0 border-t border-white/10 px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-5">
+              <PixelButton
+                to="/contact"
+                variant="gold-mobile"
+                label="Get in Touch"
+                labelClassName="!pl-0"
+                className="sm:max-w-full!"
+                onClick={() => setMobileOpen(false)}
+              />
+            </div>
+          </div>,
+          document.body,
+        )}
     </header>
   )
 }

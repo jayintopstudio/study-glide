@@ -158,7 +158,7 @@ export default function About() {
           </section>
 
           {/* ── University marquee ── */}
-          <section id="marquee" className="py-16 px-16 md:px-25 md:py-24 bg-[#FAFAFA]">
+          <section id="marquee" className="shell py-16 md:py-24 bg-[#FAFAFA] min-w-0 overflow-x-clip">
           <div className="text-center">
             <p className="font-medium text-[#535862]">
             Trusted by 4,000+ Universities
