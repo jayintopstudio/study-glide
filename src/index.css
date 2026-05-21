@@ -107,13 +107,13 @@ main {
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 .pxbtn--primary:hover {
-  border-color: rgba(255, 255, 255, 0.4);
+  border-color: #e2c065;
 }
 .pxbtn--primary .pxbtn-cell.on {
   background: #16484b;
 }
 .pxbtn--primary:hover .pxbtn-label {
-  color: #fff;
+  color: #e2c065;
 }
 
 .pxbtn--outline {
@@ -130,7 +130,7 @@ main {
   background: #16484b;
 }
 .pxbtn--outline:hover .pxbtn-label {
-  color: #fff;
+  color: #e2c065;
 }
 
 /* Transparent + teal border (light sections) */
@@ -180,7 +180,7 @@ main {
   padding-right: 0.5rem;
 }
 .pxbtn--gold:hover {
-  border-color: rgba(255, 255, 255, 0.4);
+  border-color: #e2c065;
 }
 .pxbtn--gold .pxbtn-cell.on {
   background: #16484b;
@@ -215,13 +215,13 @@ main {
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 .pxbtn--gold-mobile:hover {
-  border-color: rgba(255, 255, 255, 0.4);
+  border-color: #e2c065;
 }
 .pxbtn--gold-mobile .pxbtn-cell.on {
   background: #16484b;
 }
 .pxbtn--gold-mobile:hover .pxbtn-label {
-  color: #fff;
+  color: #e2c065;
 }
 .pxbtn--gold-mobile .pxbtn-arrow-box {
   width: 2.25rem;
@@ -232,7 +232,11 @@ main {
   background: #16484b;
 }
 .pxbtn--gold-mobile:hover .pxbtn-arrow-box {
-  background: #fff;
+  background: #e2c065;
+}
+.pxbtn--gold-mobile:hover .pxbtn-arrow-out,
+.pxbtn--gold-mobile:hover .pxbtn-arrow-in {
+  color: #16484b;
 }
 .pxbtn--gold-mobile .pxbtn-arrow-out {
   color: #e2c065;
@@ -251,13 +255,14 @@ main {
   padding-right: 0.5rem;
 }
 .pxbtn--secondary:hover {
-  border-color: rgba(255, 255, 255, 0.4);
+  background: transparent;
+  border-color: rgba(22, 72, 75, 0.5);
 }
 .pxbtn--secondary .pxbtn-cell.on {
-  background: #131313;
+  background: white;
 }
 .pxbtn--secondary:hover .pxbtn-label {
-  color: #fff;
+  color: #16484b;
 }
 .pxbtn--secondary .pxbtn-arrow-box {
   background: #e2c065;
@@ -320,7 +325,10 @@ main {
   background: #16484b;
 }
 .pxbtn--primary:hover .pxbtn-arrow-box {
-  background: #fff;
+  background: #e2c065;
+}
+.pxbtn--primary:hover .pxbtn-arrow-in {
+  color: #16484b;
 }
 .pxbtn--primary .pxbtn-arrow-out {
   color: #e2c065;
@@ -336,7 +344,7 @@ main {
   background: #16484b;
 }
 .pxbtn--outline .pxbtn-arrow-out {
-  color: #131313;
+  color: #16484b;
 }
 .pxbtn--outline .pxbtn-arrow-in {
   color: #e2c065;
@@ -411,14 +419,15 @@ main {
   .pxbtn--primary:hover,
   .pxbtn--primary:active {
     background: #16484b;
+    border-color: #e2c065;
   }
   .pxbtn--primary:hover .pxbtn-label,
   .pxbtn--primary:active .pxbtn-label {
-    color: #fff;
+    color: #e2c065;
   }
   .pxbtn--primary:hover .pxbtn-arrow-box,
   .pxbtn--primary:active .pxbtn-arrow-box {
-    background: #fff;
+    background: #e2c065;
   }
   .pxbtn--primary:hover .pxbtn-arrow-out,
   .pxbtn--primary:active .pxbtn-arrow-out {
@@ -432,14 +441,18 @@ main {
   }
   .pxbtn--outline:hover .pxbtn-label,
   .pxbtn--outline:active .pxbtn-label {
-    color: #fff;
+    color: #e2c065;
   }
   .pxbtn--outline:hover .pxbtn-arrow-box,
   .pxbtn--outline:active .pxbtn-arrow-box {
     background: #16484b;
   }
-  .pxbtn--outline:hover .pxbtn-arrow-out,
+  .pxbtn--outline .pxbtn-arrow-out,
   .pxbtn--outline:active .pxbtn-arrow-out {
+    color: #16484b;
+  }
+  .pxbtn--outline:hover .pxbtn-arrow-out,
+  .pxbtn--outline:hover:active .pxbtn-arrow-out {
     color: #e2c065;
   }
 
@@ -463,6 +476,7 @@ main {
   .pxbtn--gold:hover,
   .pxbtn--gold:active {
     background: #16484b;
+    border-color: #e2c065;
   }
   .pxbtn--gold:hover .pxbtn-label,
   .pxbtn--gold:active .pxbtn-label {
@@ -480,27 +494,31 @@ main {
   .pxbtn--gold-mobile:hover,
   .pxbtn--gold-mobile:active {
     background: #16484b;
+    border-color: #e2c065;
   }
   .pxbtn--gold-mobile:hover .pxbtn-label,
   .pxbtn--gold-mobile:active .pxbtn-label {
-    color: #fff;
+    color: #e2c065;
   }
   .pxbtn--gold-mobile:hover .pxbtn-arrow-box,
   .pxbtn--gold-mobile:active .pxbtn-arrow-box {
-    background: #fff;
+    background: #e2c065;
   }
   .pxbtn--gold-mobile:hover .pxbtn-arrow-out,
-  .pxbtn--gold-mobile:active .pxbtn-arrow-out {
+  .pxbtn--gold-mobile:active .pxbtn-arrow-out,
+  .pxbtn--gold-mobile:hover .pxbtn-arrow-in,
+  .pxbtn--gold-mobile:active .pxbtn-arrow-in {
     color: #16484b;
   }
 
   .pxbtn--secondary:hover,
   .pxbtn--secondary:active {
-    background: #131313;
+    background: transparent;
+    border-color: rgba(22, 72, 75, 0.5);
   }
   .pxbtn--secondary:hover .pxbtn-label,
   .pxbtn--secondary:active .pxbtn-label {
-    color: #fff;
+    color: #16484b;
   }
   .pxbtn--secondary:hover .pxbtn-arrow-box,
   .pxbtn--secondary:active .pxbtn-arrow-box {
@@ -708,6 +726,17 @@ main {
   scroll-snap-type: x mandatory;
   min-width: 0;
   max-width: 100%;
+}
+
+/* Hide scrollbar but keep horizontal scroll (testimonials, carousels) */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 /* ─── Destination cards ────────────────────────────────────── */

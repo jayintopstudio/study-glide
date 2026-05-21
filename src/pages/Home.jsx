@@ -7,6 +7,7 @@ import OptimizedImage from '../components/OptimizedImage'
 import TestimonialVideo from '../components/TestimonialVideo'
 import useTestimonials from '../hooks/useTestimonials'
 import { countryHeroImages } from '../data/countryHeroImages'
+import { services } from '../data/services'
 import { getSubmitErrorMessage } from '../lib/formErrors'
 import { submitApplication } from '../services/applications'
 
@@ -23,17 +24,6 @@ const universities = [
   { src: 'universities/University%20of%20Ulster.png', alt: 'University of Ulster' },
   { src: 'universities/University%20of%20Windsor.png', alt: 'University of Windsor' },
   { src: 'universities/Wrexham%20University.png', alt: 'Wrexham University' },
-]
-
-const services = [
-  { n: '01', title: 'University & Course Selection', body: 'Personalised recommendations tailored to your academic background, career aspirations, and budget.' },
-  { n: '02', title: 'Admission Processing & Application Support', body: 'End-to-end assistance with submitting strong, complete applications to your chosen universities.' },
-  { n: '03', title: 'Personal Statement & Document Preparation', body: 'Expert help crafting compelling personal statements, CVs, and all required supporting documents.' },
-  { n: '04', title: 'Visa Application Assistance', body: 'Professional guidance through the entire visa process to maximise your chances of approval.' },
-  { n: '05', title: 'Accommodation Advice', body: 'Practical support in finding safe, comfortable, and suitable student housing options.' },
-  { n: '06', title: 'Scholarship & Funding Guidance', body: 'Assistance identifying and applying for scholarships, discounts, and funding opportunities.' },
-  { n: '07', title: 'Interview Preparation & Credibility Coaching', body: 'One-on-one coaching to prepare you confidently for university and visa interviews.' },
-  { n: '08', title: 'Pre-Departure & Travel Guidance', body: 'Comprehensive briefings to help you prepare for life abroad, travel, and successful settlement.' },
 ]
 
 /** Responsive grid spans (1 col mobile, 2 col sm, mosaic lg+) — same as Destination page */
@@ -349,8 +339,8 @@ export default function Home() {
           <div className="grid grid-cols-1 gap-px overflow-hidden border border-[#e9eaeb] bg-[#e9eaeb] sm:rounded-2xl md:grid-cols-2 lg:grid-cols-4">
             {services.map((s) => (
               <Link
-                key={s.n}
-                to="/services"
+                key={s.id}
+                to={`/services#${s.id}`}
                 className="group flex min-h-60 flex-col gap-4 bg-white p-6 text-inherit no-underline sm:p-8"
               >
                 <div className="inline-flex h-8 w-11 items-center justify-center rounded-md border border-[#e9eaeb] bg-white text-[0.8125rem] font-semibold text-[#181d27]">
@@ -460,7 +450,7 @@ export default function Home() {
             <div className="carousel-scroller-wrap">
             <div
               ref={testimonialScrollRef}
-              className="carousel-scroller gap-6 scroll-smooth pb-2 snap-x snap-mandatory touch-pan-x [scrollbar-width:thin]"
+              className="carousel-scroller scrollbar-hide gap-6 scroll-smooth pb-2 snap-x snap-mandatory touch-pan-x"
             >
             {testimonials.map((t) => (
               <article

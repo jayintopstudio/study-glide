@@ -1,55 +1,29 @@
+import { useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import Layout from '../components/Layout'
 import OptimizedImage from '../components/OptimizedImage'
 import PixelButton from '../components/PixelButton'
-
-// ─── Data ────────────────────────────────────────────────────
-
-const serviceItems = [
-  {
-    title: 'University and Course Selection Guidance',
-    body: 'We take time to understand your academic profile, career goals, and preferences, then recommend the best universities and programmes that match your aspirations and budget.',
-    img: '/services/Image(14).png',
-  },
-  {
-    title: 'Admission Processing and Application Support',
-    body: 'From submitting applications to tracking progress, we handle the entire admission process efficiently and professionally on your behalf.',
-    img: '/services/Image(15).png',
-  },
-  {
-    title: 'Personal Statement and Document Preparation',
-    body: 'Our experienced team helps you create powerful, authentic personal statements, CVs, recommendation letters, and all other supporting documents that stand out to admissions committees.',
-    img: '/services/Image(16).png',
-  },
-  {
-    title: 'Visa Application Assistance',
-    body: 'We provide step-by-step guidance on visa documentation, application forms, financial proofs, and credibility interviews to significantly improve your approval chances.',
-    img: '/services/Image(17).png',
-  },
-  {
-    title: 'Accommodation Advice',
-    body: 'We offer practical recommendations and connections to secure safe, convenient, and affordable student accommodation near your university.',
-    img: '/services/Image(18).png',
-  },
-  {
-    title: 'Scholarship and Funding Guidance',
-    body: 'We identify suitable scholarships, university discounts, and funding options, and support you through the application process to reduce your overall study costs.',
-    img: '/services/Image(19).png',
-  },
-  {
-    title: 'Interview Preparation and Credibility Interview Coaching',
-    body: 'Gain confidence with personalised mock interviews and expert coaching tailored to university admissions and visa credibility interviews.',
-    img: '/services/Image(20).png',
-  },
-  {
-    title: 'Pre-Departure and Travel Guidance',
-    body: 'Comprehensive briefings covering travel arrangements, what to pack, cultural orientation, banking, health insurance, and everything you need to settle successfully in your new country.',
-    img: '/services/Image(21).png',
-  },
-]
+import { services as serviceItems } from '../data/services'
 
 // ─── Page ────────────────────────────────────────────────────
 
 export default function Services() {
+  const { hash } = useLocation()
+
+  useEffect(() => {
+    if (!hash) return
+    const id = decodeURIComponent(hash.slice(1))
+    const scrollToSection = () => {
+      const el = document.getElementById(id)
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    }
+    scrollToSection()
+    const t = window.setTimeout(scrollToSection, 100)
+    return () => window.clearTimeout(t)
+  }, [hash])
+
   return (
     <Layout>
 
@@ -100,19 +74,20 @@ export default function Services() {
               const isEven = index % 2 !== 0
               return (
                 <div
-                  key={service.title}
+                  key={service.id}
                   className={`flex flex-col lg:flex-row items-center ${isEven ? 'lg:flex-row-reverse' : ''}`}
                 >
-                  {/* Text side */}
+                  {/* Text side — hash targets here so Learn more scrolls to copy, not the image */}
                   <div
-                    className={`w-full lg:max-w-[500px] mx-auto lg:w-1/2 order-2 lg:order-none px-4 py-8 ${
+                    id={service.id}
+                    className={`scroll-mt-24 w-full lg:max-w-[500px] mx-auto lg:w-1/2 order-2 lg:order-none px-4 py-8 ${
                       isEven
                         ? ''
                         : ''
                     }`}
                   >
-                    <h2 className="service-title text-[24px]! md:text-[30px]!">{service.title}</h2>
-                    <p className="service-paragraph text-base! lg:text-lg!">{service.body}</p>
+                    <h2 className="service-title text-[24px]! md:text-[30px]!">{service.titleLong}</h2>
+                    <p className="service-paragraph text-base! lg:text-lg!">{service.bodyLong}</p>
 
                     <PixelButton
                       to="/contact"
@@ -126,7 +101,7 @@ export default function Services() {
                   <div className="relative w-full lg:w-1/2 order-1 lg:order-none">
                     <OptimizedImage
                       src={service.img}
-                      alt={service.title}
+                      alt={service.titleLong}
                       className="w-full h-auto object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
