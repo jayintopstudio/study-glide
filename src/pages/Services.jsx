@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
 import Layout from '../components/Layout'
 import OptimizedImage from '../components/OptimizedImage'
 import PixelButton from '../components/PixelButton'
@@ -8,21 +7,9 @@ import { services as serviceItems } from '../data/services'
 // ─── Page ────────────────────────────────────────────────────
 
 export default function Services() {
-  const { hash } = useLocation()
-
   useEffect(() => {
-    if (!hash) return
-    const id = decodeURIComponent(hash.slice(1))
-    const scrollToSection = () => {
-      const el = document.getElementById(id)
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      }
-    }
-    scrollToSection()
-    const t = window.setTimeout(scrollToSection, 100)
-    return () => window.clearTimeout(t)
-  }, [hash])
+    window.scrollTo(0, 0)
+  }, [])
 
   return (
     <Layout>
@@ -77,10 +64,8 @@ export default function Services() {
                   key={service.id}
                   className={`flex flex-col lg:flex-row items-center ${isEven ? 'lg:flex-row-reverse' : ''}`}
                 >
-                  {/* Text side — hash targets here so Learn more scrolls to copy, not the image */}
                   <div
-                    id={service.id}
-                    className={`scroll-mt-24 w-full lg:max-w-[500px] mx-auto lg:w-1/2 order-2 lg:order-none px-4 py-8 ${
+                    className={`w-full lg:max-w-[500px] mx-auto lg:w-1/2 order-2 lg:order-none px-4 py-8 ${
                       isEven
                         ? ''
                         : ''
