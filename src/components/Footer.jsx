@@ -78,7 +78,8 @@ export default function Footer() {
               </p>
               <p className="contact-text text-[#94979C]!">
                 <span className="text-[#E2C065] font-display">Phone</span><br />
-                +234 913 307 1334
+                +234 913 307 1334<br />
+                +234 815 999 9787
               </p>
               <p className="contact-text text-[#94979C]!">
                 <span className="text-[#E2C065] font-display">Email</span><br />
