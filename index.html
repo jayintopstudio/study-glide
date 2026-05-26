@@ -7,15 +7,13 @@
     <meta name="description" content="Expert guidance for Nigerian students ready to study abroad." />
 
     <!--
-      Favicons — use absolute URLs so Google/Bing can fetch them reliably.
-      The blue "S" in search results is Google's placeholder (first letter of StudyGlide)
-      when it cannot load your real favicon from the live site.
+      Favicons for browsers AND search engines (Google reads this static HTML — not React).
+      Files live in /public and are copied to /dist on build. Do not set favicon only in JSX.
     -->
-    <link rel="icon" href="https://studyglidedu.com/favicon.ico" sizes="48x48" />
-    <link rel="shortcut icon" href="https://studyglidedu.com/favicon.ico" />
-    <link rel="icon" type="image/png" href="https://studyglidedu.com/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/png" href="https://studyglidedu.com/web-app-manifest-192x192.png" sizes="192x192" />
-    <link rel="apple-touch-icon" sizes="180x180" href="https://studyglidedu.com/apple-touch-icon.png" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/png" href="/web-app-manifest-192x192.png" sizes="192x192" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
     <!-- PWA / Android home screen -->
     <link rel="manifest" href="/site.webmanifest" />
