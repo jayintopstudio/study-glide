@@ -75,7 +75,7 @@ export default function Contact() {
   }
 
   return (
-    <Layout>
+    <Layout title="Contact" description="Get in touch with StudyGlide Educational Consult.">
 
       {/* ── Main ── */}
       <main>
