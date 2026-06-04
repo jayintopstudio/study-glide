@@ -8,7 +8,7 @@ export const SITE = {
    * Social + link preview image (NOT page photos like Contact’s Image(12).png).
    * Replace public/og-image.png, then bump ogImageVersion so caches refresh.
    */
-  ogImageVersion: 3,
+  ogImageVersion: 4,
   ogImagePath: '/og-image.png',
   ogImageWidth: 512,
   ogImageHeight: 512,
