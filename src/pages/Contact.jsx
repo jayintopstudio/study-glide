@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from 'react'
 import Layout from '../components/Layout'
 import OptimizedImage from '../components/OptimizedImage'
@@ -75,7 +77,7 @@ export default function Contact() {
   }
 
   return (
-    <Layout title="Contact" description="Get in touch with StudyGlide Educational Consult.">
+    <Layout>
 
       {/* ── Main ── */}
       <main>

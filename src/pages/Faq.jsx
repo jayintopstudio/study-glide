@@ -1,5 +1,7 @@
+'use client'
+
 import { useEffect, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import Layout from '../components/Layout'
 import OptimizedImage from '../components/OptimizedImage'
 import PixelButton from '../components/PixelButton'
@@ -201,7 +203,7 @@ export default function Faq() {
             {filtered.length === 0 ? (
               <p className="faq-empty">
                 No questions match &ldquo;{query}&rdquo;.{' '}
-                <Link to="/contact">Ask us directly →</Link>
+                <Link href="/contact">Ask us directly →</Link>
               </p>
             ) : (
               filtered.map((faq, i) => (

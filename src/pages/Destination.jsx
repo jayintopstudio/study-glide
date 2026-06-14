@@ -1,5 +1,7 @@
+'use client'
+
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import Layout from '../components/Layout'
 import OptimizedImage from '../components/OptimizedImage'
 import { countryHeroImages } from '../data/countryHeroImages'
@@ -161,7 +163,7 @@ export default function Destination() {
               {filtered.map((d, i) => (
                 <Link
                   key={d.to}
-                  to={d.to}
+                  href={d.to}
                   className={`dest-card min-h-[17.5rem] sm:min-h-[20rem] ${DEST_GRID_SPANS[i % DEST_GRID_SPANS.length]}`}
                 >
                   <OptimizedImage src={d.img} alt="" decorative className="dest-card__media" />

@@ -1,5 +1,7 @@
+'use client'
+
 import { useRef, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 
 const DEFAULT_COLS = 6
 const DEFAULT_ROWS = 2
@@ -122,18 +124,10 @@ function usePixelGrid(btnRef, gridRef, cols, rows) {
   }, [btnRef, gridRef, cols, rows])
 }
 
-/**
- * Pixel-grid ripple + sliding arrow. Variants mirror existing site button styles.
- *
- * primary | outline     — hero CTAs
- * ghost   | ghost-lg    — transparent + teal border (light sections)
- * gold    | gold-mobile — filled gold
- * secondary | secondary-applicants | secondary-lg — filled teal
- */
 export default function PixelButton({
   label,
-  to,
   href,
+  to,
   variant = 'primary',
   className = '',
   labelClassName = '',
@@ -148,7 +142,9 @@ export default function PixelButton({
   const gridRef = useRef(null)
   usePixelGrid(btnRef, gridRef, cols, rows)
 
-  const isButton = as === 'button' || (!to && !href && as !== 'link')
+  const linkHref = href ?? to
+  const isButton = as === 'button' || (!linkHref && as !== 'link')
+  const isExternal = linkHref?.startsWith('http')
   const variantClass =
     variant === 'secondary-applicants'
       ? 'pxbtn--secondary pxbtn--secondary-applicants'
@@ -186,9 +182,9 @@ export default function PixelButton({
     )
   }
 
-  if (to) {
+  if (linkHref && !isExternal) {
     return (
-      <Link ref={btnRef} to={to} className={rootClass} onClick={onClick}>
+      <Link ref={btnRef} href={linkHref} className={rootClass} onClick={onClick}>
         {inner}
       </Link>
     )
@@ -197,7 +193,7 @@ export default function PixelButton({
   return (
     <a
       ref={btnRef}
-      href={href}
+      href={linkHref}
       className={rootClass}
       target="_blank"
       rel="noopener noreferrer"

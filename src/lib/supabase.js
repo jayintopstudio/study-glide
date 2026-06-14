@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
 export const isSupabaseConfigured = () =>
   Boolean(supabaseUrl && supabaseAnonKey)
@@ -11,4 +11,4 @@ export const supabase = isSupabaseConfigured()
   : null
 
 export const TESTIMONIALS_BUCKET =
-  import.meta.env.VITE_SUPABASE_TESTIMONIALS_BUCKET || 'testimonials'
+  process.env.NEXT_PUBLIC_SUPABASE_TESTIMONIALS_BUCKET || 'testimonials'

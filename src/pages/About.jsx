@@ -1,3 +1,5 @@
+'use client'
+
 import Layout from '../components/Layout'
 import PixelButton from '../components/PixelButton'
 import OptimizedImage from '../components/OptimizedImage'

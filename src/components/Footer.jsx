@@ -1,5 +1,7 @@
+'use client'
+
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import OptimizedImage from './OptimizedImage'
 import PixelButton from './PixelButton'
 import { getSubmitErrorMessage } from '../lib/formErrors'
@@ -8,10 +10,10 @@ import { subscribeNewsletter } from '../services/newsletter'
 const FOOTER_LOGO = '/footer-logo.png'
 
 const quickLinks = [
-  { to: '/about',    label: 'About Us' },
-  { to: '/contact',  label: 'Contact Us' },
-  { to: '/faq',      label: 'FAQ' },
-  { to: '/services', label: 'Scholarships' },
+  { href: '/about',    label: 'About Us' },
+  { href: '/contact',  label: 'Contact Us' },
+  { href: '/faq',      label: 'FAQ' },
+  { href: '/services', label: 'Scholarships' },
 ]
 
 const socials = [
@@ -60,7 +62,7 @@ export default function Footer() {
 
           {/* Column 1 — Brand */}
           <div>
-            <Link to="/" className="flex items-center gap-3">
+            <Link href="/" className="flex items-center gap-3">
               <OptimizedImage src={FOOTER_LOGO} alt="StudyGlide logo" className="w-full max-w-[160px]" />
             </Link>
             <p className="mt-6 max-w-sm contact-text text-[#94A3B8]!">
@@ -92,8 +94,8 @@ export default function Footer() {
           <div className='sm:block hidden'>
             <h3 className="font-semibold text-lg">Quick Links</h3>
             <div className="mt-5 space-y-3">
-              {quickLinks.map(({ to, label }) => (
-                <Link key={to} to={to} className="quick-link-text block">
+              {quickLinks.map(({ href, label }) => (
+                <Link key={href} href={href} className="quick-link-text block">
                   {label}
                 </Link>
               ))}
@@ -159,8 +161,8 @@ export default function Footer() {
           <div className='w-1/2'>
             <h3 className="font-semibold text-lg">Quick Links</h3>
             <div className="mt-5 space-y-3">
-              {quickLinks.map(({ to, label }) => (
-                <Link key={to} to={to} className="quick-link-text block">
+              {quickLinks.map(({ href, label }) => (
+                <Link key={href} href={href} className="quick-link-text block">
                   {label}
                 </Link>
               ))}

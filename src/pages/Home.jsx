@@ -1,5 +1,7 @@
+'use client'
+
 import { useState, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import Layout from '../components/Layout'
 import PixelButton from '../components/PixelButton'
 import FormSelect from '../components/FormSelect'
@@ -340,7 +342,7 @@ export default function Home() {
             {services.map((s) => (
               <Link
                 key={s.id}
-                to="/services"
+                href="/services"
                 className="group flex min-h-60 flex-col gap-4 bg-white p-6 text-inherit no-underline sm:p-8"
               >
                 <div className="inline-flex h-8 w-11 items-center justify-center rounded-md border border-[#e9eaeb] bg-white text-[0.8125rem] font-semibold text-[#181d27]">
@@ -379,7 +381,7 @@ export default function Home() {
             {destinations.map((d, i) => (
               <Link
                 key={d.name}
-                to={d.to}
+                href={d.to}
                 className={`dest-card min-h-[17.5rem] sm:min-h-[20rem] ${DEST_GRID_SPANS[i]}`}
               >
                 <OptimizedImage src={d.img} alt="" decorative className="dest-card__media" />
@@ -404,7 +406,7 @@ export default function Home() {
               {destinations.map(d => (
                 <Link
                   key={d.name}
-                  to={d.to}
+                  href={d.to}
                   data-dest-slide
                   className="relative w-[min(100%,18.75rem)] shrink-0 snap-center overflow-hidden sm:w-80"
                 >
