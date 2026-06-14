@@ -7,40 +7,7 @@ import PixelButton from '../components/PixelButton'
 import { getSubmitErrorMessage } from '../lib/formErrors'
 import { submitContactMessage } from '../services/contact'
 
-// ─── Data ────────────────────────────────────────────────────
-
-const contactDetails = [
-  {
-    icon: 'fa-solid fa-location-dot',
-    label: 'Office Address',
-    value: 'Shop 1MS FAAN complex beside FAAN staff quarters, Ikeja along Lagos State',
-  },
-  {
-    icon: 'fa-solid fa-phone',
-    label: 'Phone',
-    value: '+2349133071334',
-    href: 'tel:+2349133071334',
-  },
-  {
-    icon: 'fa-solid fa-envelope',
-    label: 'Email',
-    value: 'Info@studyglidedu.com',
-    href: 'mailto:Info@studyglidedu.com',
-  },
-  {
-    icon: 'fa-brands fa-whatsapp',
-    label: 'WhatsApp',
-    value: 'Chat with us on WhatsApp',
-    href: 'https://wa.me/+2349133071334',
-  },
-]
-
-const socials = [
-  { href: 'https://www.tiktok.com/@studyglide_edu',      icon: 'fa-brands fa-tiktok',    label: 'TikTok' },
-  { href: 'https://twitter.com/studyglide_edu',          icon: 'fa-brands fa-x-twitter', label: 'X' },
-  { href: 'https://www.instagram.com/studyglide_edu',    icon: 'fa-brands fa-instagram', label: 'Instagram' },
-  { href: 'https://www.facebook.com/share/18DvbTwACB/',  icon: 'fa-brands fa-facebook-f',label: 'Facebook' },
-]
+// ─── Page ────────────────────────────────────────────────────
 
 const defaultForm = {
   first_name: '',
@@ -49,8 +16,6 @@ const defaultForm = {
   phone: '',
   message: '',
 }
-
-// ─── Page ────────────────────────────────────────────────────
 
 export default function Contact() {
   const [form, setForm] = useState(defaultForm)
